@@ -7,7 +7,7 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class Map{
-	int map[][];
+	char map[][];
 	String mapFile;
 	int xSize;
 	int ySize;
@@ -24,12 +24,10 @@ public class Map{
 			BufferedReader br = new BufferedReader(fr);
 			xSize = Integer.parseInt(br.readLine());
 			ySize = Integer.parseInt(br.readLine());
-			map = new int[xSize][ySize];
+			map = new char[ySize][xSize];
 			for (int i = 0; i < ySize; i++) {
-				for (int j = 0; j < xSize; j++) {
-					map[j][i] = br.read();
-				}
-				br.read();
+				String str = br.readLine();
+				str.getChars(0, xSize, map[i], 0);
 			}
 			br.close();
 			fr.close();
@@ -48,6 +46,10 @@ public class Map{
 	
 	public int getYSize() {
 		return ySize;
+	}
+	
+	public char[][] getMap() {
+		return map;
 	}
 	
 	public void destroy(int xPos, int yPos, int rad)
