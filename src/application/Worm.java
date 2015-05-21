@@ -8,7 +8,6 @@ public class Worm {
 	private Weapon[] weapons;
 	private SimpleIntegerProperty xPos;
 	private SimpleIntegerProperty yPos;
-	private int team;
-	private int numInTeam;
+	//new Team team;
 
 }
