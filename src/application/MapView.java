@@ -40,7 +40,11 @@ public class MapView {
 //		result.getChildren().add(map);
 	}
 	
-	public GridPane getMap() {
+	public GridPane getView() {
 		return map;
+	}
+	
+	public Map getMap() {
+		return m;
 	}
 }

@@ -28,7 +28,11 @@ public class WormView {
 	public ImageView getPic() {
 		return new ImageView(pic);
 	}
-	
+
+	public Worm getWorm() {
+		return worm;
+	}
+
 	public SimpleIntegerProperty xProperty() {
 		return xPos;
 	}

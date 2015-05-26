@@ -18,26 +18,31 @@ public class Worm {
 //		life=new SimpleIntegerProperty(100);
 	}
 	
-	public void elementalMove(boolean isRight, char[][] getMap){
+	private void elementalMove(boolean isRight, char[][] getMap){
 		
 		//move right or left
 		if (isRight){
-			xPos.add(1);
+			xPos.set(xPos.get() + 1);
 		}else{
-			xPos.add(-1);
+			xPos.set(xPos.get() - 1);
 		}
-		//adjust the hight
-		if (getMap[yPos.get()][xPos.get()]==('0')){
-			while(getMap[yPos.get()-1][xPos.get()]==('0'))
-			{
-				yPos.add(-1);
-			}
-		}else{
-			while(getMap[yPos.get()-1][xPos.get()]==('1')){
-				yPos.add(1);
-			}
+		//adjust the height
+		while(getMap[yPos.get() + 4][xPos.get() + 2]==('1'))
+		{
+			yPos.set(yPos.get() - 1);
+		}
+		while(getMap[yPos.get() + 5][xPos.get() + 2]==('0')){
+			yPos.set(yPos.get() + 1);
 		}
 //		paceCounter--;
+	}
+	
+	public void moveRight(Map m) {
+		elementalMove(true, m.getMap());
+	}
+	
+	public void moveLeft(Map m) {
+		elementalMove(false, m.getMap());
 	}
 	
 	public SimpleIntegerProperty xPosProperty() {
