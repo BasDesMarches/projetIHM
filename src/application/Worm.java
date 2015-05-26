@@ -3,22 +3,22 @@ package application;
 import javafx.beans.property.SimpleIntegerProperty;
 
 public class Worm {
-	private String name;
-	private SimpleIntegerProperty life;
-	private Weapon[] weapons;
-	private SimpleIntegerProperty xPos;
-	private SimpleIntegerProperty yPos;
-	private int paceCounter;
+	String name;
+//	SimpleIntegerProperty life;
+//	Weapon[] weapons;
+	SimpleIntegerProperty xPos;
+	SimpleIntegerProperty yPos;
+//	int paceCounter;
 	//new Team team;
 	
 	public Worm(String name, int x, int y){
 		this.name=name;
-		xPos=new SimpleIntegerProperty(x);
-		yPos=new SimpleIntegerProperty(y);
-		life=new SimpleIntegerProperty(100);
+		xPos = new SimpleIntegerProperty(x);
+		yPos = new SimpleIntegerProperty(y);
+//		life=new SimpleIntegerProperty(100);
 	}
 	
-	private void elementalMove(boolean isRight, char[][]getMap){
+	public void elementalMove(boolean isRight, char[][] getMap){
 		
 		//move right or left
 		if (isRight){
@@ -37,7 +37,18 @@ public class Worm {
 				yPos.add(1);
 			}
 		}
-		paceCounter--;
+//		paceCounter--;
 	}
-
+	
+	public SimpleIntegerProperty xPosProperty() {
+		return xPos;
+	}
+	
+	public SimpleIntegerProperty yPosProperty() {
+		return yPos;
+	}
+	
+	public String getName() {
+		return name;
+	}
 }

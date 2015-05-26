@@ -2,7 +2,7 @@ package application;
 
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
+//import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
@@ -13,7 +13,7 @@ public class MapView {
 	ImageView fg;
 //	GridPane ground;
 	GridPane map;
-	StackPane result;
+//	StackPane result;
 	
 	public MapView(Map m) {
 		squareSize = 5;
@@ -33,14 +33,14 @@ public class MapView {
 //		bg = new ImageView(new Image("Images/SkyBG.jpg",squareSize*(m.getXSize()),squareSize*(m.getYSize()),true,false));
 //		fg = new ImageView(new Image("Images/soil.jpg",squareSize*(m.getXSize()),squareSize*(m.getYSize()),true,false));
 //		fg.setClip(ground);
-		result = new StackPane();
+//		result = new StackPane();
 //		result.getChildren().add(ground);
 //		result.getChildren().add(bg);
 //		result.getChildren().add(fg);
-		result.getChildren().add(map);
+//		result.getChildren().add(map);
 	}
 	
-	public StackPane getResult() {
-		return result;
+	public GridPane getMap() {
+		return map;
 	}
 }
