@@ -18,8 +18,8 @@ public class Main extends Application {
 			
 			Map map = new Map("hill1.map");
 			MapView mapView = new MapView(map);
-			Worm w = new Worm("Coucou", 80, 60);
-			WormView wv = new WormView(w);
+			Worm w = new Worm("Coucou", 80, 10);
+			WormView wv = new WormView(w, map);
 			ImageView worm = wv.getPic();
 			AnchorPane.setTopAnchor(worm, wv.yProperty().doubleValue()*5);
 			AnchorPane.setLeftAnchor(worm, wv.xProperty().doubleValue()*5);

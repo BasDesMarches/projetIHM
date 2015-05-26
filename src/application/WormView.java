@@ -10,13 +10,19 @@ public class WormView {
 	SimpleIntegerProperty yPos;
 	Image pic;
 	
-	public WormView(Worm w) {
+	public WormView(Worm w, Map map) {
 		worm = w;
 		xPos = new SimpleIntegerProperty();
-		xPos.bind(worm.xPosProperty());
+		xPos.bindBidirectional(worm.xPosProperty());
 		yPos = new SimpleIntegerProperty();
-		yPos.bind(worm.yPosProperty());
+		yPos.bindBidirectional(worm.yPosProperty());
 		pic = new Image("Images/Worms/wjetfly4.png",30,30,true,false);
+		while ((map.getMap()[yPos.get() + 4][xPos.get() + 2]) == '1') {
+			yPos.set(yPos.get() - 1);
+		}
+		while ((map.getMap()[yPos.get() + 5][xPos.get() + 2]) == '0') {
+			yPos.set(yPos.get() + 1);
+		}
 	}
 	
 	public ImageView getPic() {

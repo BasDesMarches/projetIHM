@@ -27,13 +27,13 @@ public class Worm {
 			xPos.add(-1);
 		}
 		//adjust the hight
-		if (getMap[xPos.get()][yPos.get()]==('0')){
-			while(getMap[xPos.get()][yPos.get()-1]==('0'))
+		if (getMap[yPos.get()][xPos.get()]==('0')){
+			while(getMap[yPos.get()-1][xPos.get()]==('0'))
 			{
 				yPos.add(-1);
 			}
 		}else{
-			while(getMap[xPos.get()][yPos.get()-1]==('1')){
+			while(getMap[yPos.get()-1][xPos.get()]==('1')){
 				yPos.add(1);
 			}
 		}
