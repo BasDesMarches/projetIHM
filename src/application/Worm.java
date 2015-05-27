@@ -26,7 +26,7 @@ public class Worm {
 		}else{
 			xPos.add(-1);
 		}
-		//adjust the hight
+		//adjust the height
 		if (getMap[xPos.get()][yPos.get()]==('0')){
 			while(getMap[xPos.get()][yPos.get()-1]==('0'))
 			{
@@ -39,5 +39,5 @@ public class Worm {
 		}
 		paceCounter--;
 	}
-
+	
 }
