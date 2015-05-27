@@ -21,13 +21,11 @@ public class KeyPressedEvent implements EventHandler<KeyEvent>{
 		switch (event.getCode()) {
 		case D:
 		case RIGHT:
-			System.out.println("Coucou1");
 			w.moveRight(m);
 			break;
 			
 		case Q:
 		case LEFT:
-			System.out.println("Coucou2");
 			w.moveLeft(m);
 			break;
 

@@ -1,5 +1,6 @@
 package application;
 
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
 public class Worm {
@@ -8,41 +9,45 @@ public class Worm {
 	Weapon weapon;
 	SimpleIntegerProperty xPos;
 	SimpleIntegerProperty yPos;
+	SimpleBooleanProperty onRight;
 //	int paceCounter;
 	//new Team team;
 	
 	public Worm(String name, int x, int y){
-		this.name=name;
+		this.name = name;
 		xPos = new SimpleIntegerProperty(x);
 		yPos = new SimpleIntegerProperty(y);
+		onRight = new SimpleBooleanProperty(true);
 //		life=new SimpleIntegerProperty(100);
 	}
 	
-	private void elementalMove(boolean isRight, char[][] getMap){
+	private void elementalMove(char[][] getMap){
 		
 		//move right or left
-		if (isRight){
+		if (onRight.get() && xPos.get() < 155){
 			xPos.set(xPos.get() + 1);
-		}else{
+		} else if (!onRight.get() && xPos.get() > 0) {
 			xPos.set(xPos.get() - 1);
 		}
 		//adjust the height
-		while(getMap[yPos.get() + 4][xPos.get() + 2]==('1'))
+		while(getMap[yPos.get() + 5][xPos.get() + 2]==('1'))
 		{
 			yPos.set(yPos.get() - 1);
 		}
-		while(getMap[yPos.get() + 5][xPos.get() + 2]==('0')){
+		while(getMap[yPos.get() + 6][xPos.get() + 2]==('0')){
 			yPos.set(yPos.get() + 1);
 		}
 //		paceCounter--;
 	}
 	
 	public void moveRight(Map m) {
-		elementalMove(true, m.getMap());
+		onRight.set(true);
+		elementalMove(m.getMap());
 	}
 	
 	public void moveLeft(Map m) {
-		elementalMove(false, m.getMap());
+		onRight.set(false);
+		elementalMove(m.getMap());
 	}
 	
 	public SimpleIntegerProperty xPosProperty() {
@@ -65,4 +70,7 @@ public class Worm {
 		this.weapon = weapon;
 	}
 	
+	public SimpleBooleanProperty isOnRight() {
+		return onRight;
+	}
 }
