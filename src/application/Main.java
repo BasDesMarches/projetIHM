@@ -14,8 +14,10 @@ public class Main extends Application {
 			Scene scene = new Scene(root,800,600);
 			
 			Map map = new Map("hill1.map");
-			MapView mapView = new MapView(map);
-			root.setCenter(mapView.getResult());
+			Worm w = new Worm("Coucou", 80, 10);
+			World world = new World(map, w);
+			
+			root.setCenter(world.getWorld());
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);
 			primaryStage.show();
