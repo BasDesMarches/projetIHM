@@ -18,7 +18,6 @@ public class KeyPressedEvent implements EventHandler<KeyEvent>{
 
 	@Override
 	public void handle(KeyEvent event) {
-		System.out.println("Coucou");
 		switch (event.getCode()) {
 		case D:
 		case RIGHT:

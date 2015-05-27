@@ -5,7 +5,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 public class Worm {
 	String name;
 //	SimpleIntegerProperty life;
-//	Weapon[] weapons;
+	Weapon weapon;
 	SimpleIntegerProperty xPos;
 	SimpleIntegerProperty yPos;
 //	int paceCounter;
@@ -55,6 +55,14 @@ public class Worm {
 	
 	public String getName() {
 		return name;
+	}
+
+	public Weapon getWeapon() {
+		return weapon;
+	}
+
+	public void setWeapon(Weapon weapon) {
+		this.weapon = weapon;
 	}
 	
 }

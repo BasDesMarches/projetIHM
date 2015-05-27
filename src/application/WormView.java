@@ -8,7 +8,7 @@ public class WormView {
 	Worm worm;
 	SimpleIntegerProperty xPos;
 	SimpleIntegerProperty yPos;
-	Image pic;
+	ImageView pic;
 	
 	public WormView(Worm w, Map map) {
 		worm = w;
@@ -16,7 +16,7 @@ public class WormView {
 		xPos.bindBidirectional(worm.xPosProperty());
 		yPos = new SimpleIntegerProperty();
 		yPos.bindBidirectional(worm.yPosProperty());
-		pic = new Image("Images/Worms/wjetfly4.png",30,30,true,false);
+		pic = new ImageView(new Image("Images/Worms/wjetfly4.png",30,30,true,false));
 		while ((map.getMap()[yPos.get() + 4][xPos.get() + 2]) == '1') {
 			yPos.set(yPos.get() - 1);
 		}
@@ -26,7 +26,7 @@ public class WormView {
 	}
 	
 	public ImageView getPic() {
-		return new ImageView(pic);
+		return pic;
 	}
 
 	public Worm getWorm() {

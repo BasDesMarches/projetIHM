@@ -1,8 +1,10 @@
 package application;
 
+import event_handler.KeyPressedEvent;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.BorderPane;
 
 
@@ -17,6 +19,7 @@ public class Main extends Application {
 			Worm w = new Worm("Coucou", 80, 10);
 			World world = new World(map, w);
 			
+			setTheEventFilters(scene, map, w);
 			root.setCenter(world.getWorld());
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);
@@ -28,5 +31,13 @@ public class Main extends Application {
 	
 	public static void main(String[] args) {
 		launch(args);
+	}
+
+	private void setTheEventFilters(Scene s, Map map, Worm w) {
+		if (s == null) {
+			System.out.println("The BorderPane must be initialized for the EventFilter to be set.");
+			return;
+		}
+		s.addEventFilter(KeyEvent.KEY_PRESSED, new KeyPressedEvent(w, map));
 	}
 }
