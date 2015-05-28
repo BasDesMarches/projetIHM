@@ -5,7 +5,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 
 public class Worm {
 	String name;
-//	SimpleIntegerProperty life;
+	SimpleIntegerProperty life;
 	Weapon weapon;
 	SimpleIntegerProperty xPos;
 	SimpleIntegerProperty yPos;
@@ -18,7 +18,7 @@ public class Worm {
 		xPos = new SimpleIntegerProperty(x);
 		yPos = new SimpleIntegerProperty(y);
 		onRight = new SimpleBooleanProperty(true);
-//		life=new SimpleIntegerProperty(100);
+		life=new SimpleIntegerProperty(100);
 	}
 	
 	private void elementalMove(char[][] getMap){
@@ -50,6 +50,14 @@ public class Worm {
 		elementalMove(m.getMap());
 	}
 	
+	public void  wound(int i){
+		life.set(life.get()-i);
+	}
+	
+	public SimpleIntegerProperty lifeProperty() {
+		return life;
+	}
+
 	public SimpleIntegerProperty xPosProperty() {
 		return xPos;
 	}
@@ -72,5 +80,9 @@ public class Worm {
 	
 	public SimpleBooleanProperty isOnRight() {
 		return onRight;
+	}
+	
+	public void setLife(SimpleIntegerProperty life) {
+		this.life = life;
 	}
 }
