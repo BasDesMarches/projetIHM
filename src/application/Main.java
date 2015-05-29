@@ -17,8 +17,8 @@ public class Main extends Application {
 			BorderPane root = new BorderPane();
 			Scene scene = new Scene(root,800,600);
 			
-			Map map = new Map("hill1.map");
-			Worm w = new Worm("Worm1", map, 80, 10, Weapon.ROCKET);
+			Map map = new Map("balistique.map");
+			Worm w = new Worm("Worm1", map, 10, 10, Weapon.ROCKET);
 			World world = new World(map, w);
 			
 			setTheEventFilters(scene, map, w, world);

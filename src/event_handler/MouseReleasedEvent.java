@@ -17,7 +17,7 @@ public class MouseReleasedEvent implements EventHandler<MouseEvent>{
 
 	@Override
 	public void handle(MouseEvent event) {
-		w.fire(-1, 5);
+		w.fire(Math.atan2(event.getSceneY() - (w.yPosProperty().get()+3)*5, event.getSceneX() - (w.xPosProperty().get()+3)*5), 5);
 		world.getMap().redrawMap();
 	}
 

@@ -58,7 +58,7 @@ public class Worm {
 		char[][] grid = map.getMap();
 		double x = 0;
 		double y = 0;
-		double g = 0.1;
+		double g = 0.01;
 		double xInit = xPos.get()*5;
 		double yInit = yPos.get()*5;
 		double hInitSpeed = initSpeed*Math.cos(angle);

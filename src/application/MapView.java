@@ -40,16 +40,6 @@ public class MapView {
 				((Rectangle) node).setFill(Color.DEEPSKYBLUE);
 			}
 		}
-//		for (int i = 0; i < m.getYSize(); i++) {
-//			for (int j = 0; j < m.getXSize(); j++) {
-//				map.ge
-//				Rectangle rect = new Rectangle(squareSize, squareSize, Color.DEEPSKYBLUE);
-//				if (cases[i][j] == '1') {
-//					rect = new Rectangle(squareSize, squareSize, Color.PERU);
-//				}
-//				map.add(rect, j, i);
-//			}
-//		}
 	}
 	
 	public GridPane getView() {
