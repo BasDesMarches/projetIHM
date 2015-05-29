@@ -6,17 +6,17 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class Map{
+public class Map {
 	char map[][];
 	String mapFile;
 	int xSize;
 	int ySize;
-	
+
 	public Map(String s) {
 		mapFile = s;
 		loadMap();
 	}
-	
+
 	private void loadMap() {
 		File f = new File("Ressources/Map/" + mapFile);
 		try {
@@ -39,29 +39,31 @@ public class Map{
 			e.printStackTrace();
 		}
 	}
+
+	public void destroy(int yPos, int xPos, int rad) {
+		for (int i = yPos - rad; i <= yPos + rad; i++) {
+			for (int j = xPos - rad; j <= xPos + rad; j++) {
+				if (Math.pow(i - yPos, 2) + Math.pow(j - xPos, 2) < Math.pow(rad, 2) && inBounds(i,j)){
+					map[i][j] = '0';
+				}
+			}
+		}
+	}
 	
+	private boolean inBounds(int i, int j) {
+		return (0 <= i && i < ySize && 0 <= j && j < xSize);
+	}
+
+	// ========== Getters and setters ==========
 	public int getXSize() {
 		return xSize;
 	}
-	
+
 	public int getYSize() {
 		return ySize;
 	}
-	
+
 	public char[][] getMap() {
 		return map;
 	}
-	
-	public void destroy(int xPos, int yPos, int rad)
-	{
-		for(int i=xPos-rad;i<=xPos+rad;i++){
-			for (int j=yPos-rad;i<=yPos+rad;i++)
-			{
-				if (Math.pow(i-xPos,2)+Math.pow(j-yPos,2)< Math.pow(rad,2))
-					map[i][j]=0;
-			}
-		}
-		
-	}
-	
 }

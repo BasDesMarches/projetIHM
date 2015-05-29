@@ -10,10 +10,9 @@ public class KeyPressedEvent implements EventHandler<KeyEvent>{
 	Worm w;
 	Map m;
 	
-	public KeyPressedEvent(Worm w, Map m) {
+	public KeyPressedEvent(Worm w) {
 		super();
 		this.w = w;
-		this.m = m;
 	}
 
 	@Override
@@ -21,12 +20,12 @@ public class KeyPressedEvent implements EventHandler<KeyEvent>{
 		switch (event.getCode()) {
 		case D:
 		case RIGHT:
-			w.moveRight(m);
+			w.moveRight();
 			break;
 			
 		case Q:
 		case LEFT:
-			w.moveLeft(m);
+			w.moveLeft();
 			break;
 
 		default:
@@ -34,33 +33,4 @@ public class KeyPressedEvent implements EventHandler<KeyEvent>{
 		}
 		event.consume();
 	}
-
-//	@Override
-//	public void handle(MouseEvent event) {
-//		System.out.println("Coucou");
-//		switch (event.getButton()) {
-//		case PRIMARY:
-//			System.out.println("Coucou1");
-//			w.getWorm().moveRight(m);
-//			System.out.println(w.xProperty());
-//			System.out.println(w.yProperty());
-//			AnchorPane.setTopAnchor(worm, w.yProperty().multiply(5).doubleValue());
-//			AnchorPane.setLeftAnchor(worm, w.xProperty().multiply(5).doubleValue());
-//			break;
-//			
-//		case SECONDARY:
-//			System.out.println("Coucou2");
-//			w.getWorm().moveLeft(m);
-//			System.out.println(w.xProperty());
-//			System.out.println(w.yProperty());
-//			AnchorPane.setTopAnchor(worm, w.yProperty().multiply(5).doubleValue());
-//			AnchorPane.setLeftAnchor(worm, w.xProperty().multiply(5).doubleValue());
-//			break;
-//
-//		default:
-//			break;
-//		}
-//		event.consume();
-//	}
-
 }
