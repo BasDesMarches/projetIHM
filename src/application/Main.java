@@ -18,7 +18,7 @@ public class Main extends Application {
 			Scene scene = new Scene(root,800,600);
 			
 			Map map = new Map("balistique.map");
-			Worm w = new Worm("Worm1", map, 10, 10, Weapon.ROCKET);
+			Worm w = new Worm("Worm1", map, 10, 10, Weapon.GUN);
 			World world = new World(map, w);
 			
 			setTheEventFilters(scene, map, w, world);
