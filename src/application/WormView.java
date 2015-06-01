@@ -32,8 +32,15 @@ public class WormView {
 		while ((map.getMap()[yPos.get() + 6][xPos.get() + 2]) == '0') {
 			yPos.set(yPos.get() + 1);
 		}
-		//Rectangle lifeBg= new Rectangle(30,3, Color.BLACK);
-		//Rectangle lifeValue= new Rectangle(30,3, Color.GREEN);
+		/*
+		Rectangle lifeBg= new Rectangle(30,3, Color.BLACK);
+		Rectangle lifeValue= new Rectangle(30,3, Color.GREEN);
+		lifeBg.xProperty().bind(xPos.add(-5));
+		lifeBg.yProperty().bind(yPos);
+		lifeValue.xProperty().bind(xPos.add(-5));
+		lifeValue.yProperty().bind(yPos);
+		lifeValue.widthProperty().bind(life.multiply(0.333));
+		*/
 	}
 	
 	public ImageView getPic() {
