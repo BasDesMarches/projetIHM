@@ -1,10 +1,12 @@
 package application;
 
 import event_handler.KeyPressedEvent;
+import event_handler.MouseReleasedEvent;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 
 
@@ -15,11 +17,11 @@ public class Main extends Application {
 			BorderPane root = new BorderPane();
 			Scene scene = new Scene(root,800,600);
 			
-			Map map = new Map("hill1.map");
-			Worm w = new Worm("Coucou", 80, 10);
+			Map map = new Map("balistique.map");
+			Worm w = new Worm("Worm1", map, 10, 10, Weapon.GUN);
 			World world = new World(map, w);
 			
-			setTheEventFilters(scene, map, w);
+			setTheEventFilters(scene, map, w, world);
 			root.setCenter(world.getWorld());
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);
@@ -33,11 +35,12 @@ public class Main extends Application {
 		launch(args);
 	}
 
-	private void setTheEventFilters(Scene s, Map map, Worm w) {
+	private void setTheEventFilters(Scene s, Map map, Worm w, World world) {
 		if (s == null) {
 			System.out.println("The BorderPane must be initialized for the EventFilter to be set.");
 			return;
 		}
-		s.addEventFilter(KeyEvent.KEY_PRESSED, new KeyPressedEvent(w, map));
+		s.addEventFilter(KeyEvent.KEY_PRESSED, new KeyPressedEvent(w));
+		s.addEventFilter(MouseEvent.MOUSE_RELEASED, new MouseReleasedEvent(w, world));
 	}
 }

@@ -1,5 +1,6 @@
 package application;
 
+import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 //import javafx.scene.layout.StackPane;
@@ -19,8 +20,8 @@ public class MapView {
 		squareSize = 5;
 //		ground = new GridPane();
 		this.m = m;
-		char cases[][] = m.getMap();
 		map = new GridPane();
+		char cases[][] = m.getMap();
 		for (int i = 0; i < m.getYSize(); i++) {
 			for (int j = 0; j < m.getXSize(); j++) {
 				Rectangle rect = new Rectangle(squareSize, squareSize, Color.DEEPSKYBLUE);
@@ -30,14 +31,15 @@ public class MapView {
 				map.add(rect, j, i);
 			}
 		}
-//		bg = new ImageView(new Image("Images/SkyBG.jpg",squareSize*(m.getXSize()),squareSize*(m.getYSize()),true,false));
-//		fg = new ImageView(new Image("Images/soil.jpg",squareSize*(m.getXSize()),squareSize*(m.getYSize()),true,false));
-//		fg.setClip(ground);
-//		result = new StackPane();
-//		result.getChildren().add(ground);
-//		result.getChildren().add(bg);
-//		result.getChildren().add(fg);
-//		result.getChildren().add(map);
+	}
+	
+	public void redrawMap() {
+		char cases[][] = m.getMap();
+		for(Node node : map.getChildren()){
+			if(cases[GridPane.getRowIndex(node)][GridPane.getColumnIndex(node)] == '0'){
+				((Rectangle) node).setFill(Color.DEEPSKYBLUE);
+			}
+		}
 	}
 	
 	public GridPane getView() {
