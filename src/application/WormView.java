@@ -21,6 +21,7 @@ public class WormView {
 	ImageView pic;
 	Rectangle lifeBg= new Rectangle(30,3, Color.BLACK);
 	Rectangle lifeValue= new Rectangle(30,3, Color.GREEN);
+	ImageView iV= new ImageView();
 
 	
 

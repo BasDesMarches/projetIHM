@@ -1,6 +1,5 @@
 package application;
 
-import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -13,6 +12,7 @@ public class Worm {
 	SimpleIntegerProperty xPos;
 	SimpleIntegerProperty yPos;
 	SimpleBooleanProperty onRight;
+	boolean choosingWeapon;
 	SimpleDoubleProperty xFire;
 	SimpleDoubleProperty yFire;
 	
@@ -26,8 +26,9 @@ public class Worm {
 		xPos = new SimpleIntegerProperty(x);
 		yPos = new SimpleIntegerProperty(y);
 		onRight = new SimpleBooleanProperty(true);
+		choosingWeapon = false;
 		weapon = w;
-		life=new SimpleIntegerProperty(100);
+		life = new SimpleIntegerProperty(100);
 		xFire= new SimpleDoubleProperty(x);
 		yFire= new SimpleDoubleProperty(y);
 		
@@ -78,7 +79,6 @@ public class Worm {
 		double g = 0.01;
 		double xInit = (xPos.get() + 3)*5;
 		double yInit = (yPos.get() + 3)*5;
-		//wW.xPos.bindBidirectional(x);
 		double hInitSpeed = initSpeed*Math.cos(angle);
 		double vInitSpeed = initSpeed*Math.sin(angle);
 		switch (weapon) {
@@ -158,5 +158,13 @@ public class Worm {
 	
 	public void setLife(SimpleIntegerProperty life) {
 		this.life = life;
+	}
+	
+	public boolean isChoosingWeapon() {
+		return choosingWeapon;
+	}
+	
+	public void setIsChoosingWeapon(boolean b) {
+		choosingWeapon = b;
 	}
 }
