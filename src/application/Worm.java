@@ -1,6 +1,8 @@
 package application;
 
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
 public class Worm {
@@ -11,6 +13,10 @@ public class Worm {
 	SimpleIntegerProperty xPos;
 	SimpleIntegerProperty yPos;
 	SimpleBooleanProperty onRight;
+	SimpleDoubleProperty xFire;
+	SimpleDoubleProperty yFire;
+	
+	
 //	int paceCounter;
 	//new Team team;
 	
@@ -22,6 +28,9 @@ public class Worm {
 		onRight = new SimpleBooleanProperty(true);
 		weapon = w;
 		life=new SimpleIntegerProperty(100);
+		xFire= new SimpleDoubleProperty(x);
+		yFire= new SimpleDoubleProperty(y);
+		
 	}
 	
 	private void elementalMove(){
@@ -63,13 +72,13 @@ public class Worm {
 	}
 	
 	public void fire(double angle, double initSpeed) {
+		
 		boolean hasHit = false;
 		char[][] grid = map.getMap();
-		double x = 0;
-		double y = 0;
 		double g = 0.01;
 		double xInit = (xPos.get() + 3)*5;
 		double yInit = (yPos.get() + 3)*5;
+		//wW.xPos.bindBidirectional(x);
 		double hInitSpeed = initSpeed*Math.cos(angle);
 		double vInitSpeed = initSpeed*Math.sin(angle);
 		switch (weapon) {
@@ -77,11 +86,11 @@ public class Worm {
 			int i = 0;
 			try {
 				while (!hasHit) {
-					x = xInit + hInitSpeed*i;
-					y = yInit + vInitSpeed*i + g*i*i;
+					xFire.set(xInit + hInitSpeed*i);
+					yFire.set(yInit + vInitSpeed*i + g*i*i);
 					i++;
 					Thread.sleep(10);
-					if ((inBounds((int)(y/5), (int)(x/5)) && grid[(int)(y/5)][(int)(x/5)] == '1') || y/5 > map.getYSize() + 20) {
+					if ((inBounds((int)(yFire.get()/5), (int)(xFire.get()/5)) && grid[(int)(yFire.get()/5)][(int)(xFire.get()/5)] == '1') || yFire.get()/5 > map.getYSize() + 20) {
 						hasHit = true;
 					}
 				}
@@ -91,23 +100,24 @@ public class Worm {
 			break;
 			
 		case GUN:
-			x = xInit;
-			y = yInit;
+			xFire.set(xInit);
+			yFire.set(yInit);
 			int j = 0;
-			while (!hasHit && inBounds((int)(y/5), (int)(x/5))) {
-				if (grid[(int)(y/5)][(int)(x/5)] == '1') {
+			while (!hasHit && inBounds((int)(yFire.get()/5), (int)(xFire.get()/5))) {
+				if (grid[(int)(yFire.get()/5)][(int)(xFire.get()/5)] == '1') {
 					hasHit = true;
 				}
 				j++;
-				x = xInit + hInitSpeed*j;
-				y = yInit + vInitSpeed*j;
+				xFire.set(xInit + hInitSpeed*j);
+				yFire.set(yInit + vInitSpeed*j);
 			}
 			break;
 
 		default:
 			break;
 		}
-		map.destroy((int)(y/5), (int)(x/5), weapon.getDamage());
+		
+		map.destroy((int)(yFire.get()/5), (int)(xFire.get()/5), weapon.getDamage());
 	}
 	
 	private boolean inBounds(int y, int x) {

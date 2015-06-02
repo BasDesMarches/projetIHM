@@ -5,19 +5,23 @@ import javafx.scene.image.ImageView;
 
 public class World {
 	MapView map;
-	WormView currentWorm;
+	WormView[] currentWorm;
 	Group world;
 	
 	public World(Map m, Worm w) {
 		map = new MapView(m);
-		currentWorm = new WormView(w, m);
-		ImageView worm = currentWorm.getPic();
-		worm.layoutXProperty().bind(currentWorm.xProperty().multiply(5));
-		worm.layoutYProperty().bind(currentWorm.yProperty().multiply(5));
+		currentWorm =new WormView[1];
+		currentWorm[0] = new WormView(w, m);
+		ImageView worm = currentWorm[0].getPic();
+		worm.layoutXProperty().bind(currentWorm[0].xProperty().multiply(5));
+		worm.layoutYProperty().bind(currentWorm[0].yProperty().multiply(5));
+		
 		
 		world = new Group();
 		world.getChildren().add(map.getView());
 		world.getChildren().add(worm);
+		world.getChildren().add(currentWorm[0].lifeBg);
+		world.getChildren().add(currentWorm[0].lifeValue);
 	}
 	
 	public Group getWorld() {
@@ -29,6 +33,6 @@ public class World {
 	}
 
 	public WormView getCurrentWorm() {
-		return currentWorm;
+		return currentWorm[0];
 	}
 }
