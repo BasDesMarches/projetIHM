@@ -5,6 +5,7 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
@@ -19,13 +20,12 @@ public class WormView {
 	SimpleDoubleProperty xFire;
 	SimpleDoubleProperty yFire;
 	ImageView pic;
-	Rectangle lifeBg= new Rectangle(30,3, Color.BLACK);
-	Rectangle lifeValue= new Rectangle(30,3, Color.GREEN);
-	ImageView iV= new ImageView();
+	Rectangle lifeBg = new Rectangle(30,3, Color.BLACK);
+	Rectangle lifeValue = new Rectangle(30,3, Color.GREEN);
+	ImageView iV = new ImageView();
+	Image im = new Image("Images/Worms/bull1.png");
+	Group wormGroup = new Group();
 
-	
-
-	
 	
 	public WormView(Worm w, Map map) {
 		worm = w;
@@ -49,15 +49,9 @@ public class WormView {
 		while ((yPos.get() + 5 < 120) && (map.getMap()[yPos.get() + 5][xPos.get() + 2]) == '0') {
 			yPos.set(yPos.get() + 1);
 		}
-	}
-	
-	public void fireAnimation(){
-		switch(worm.weapon){
+		iV.visibleProperty().bind(new When(w.isFiring).then(true).otherwise(false));
+		wormGroup.getChildren().addAll(iV, lifeValue, lifeBg);
 		
-		default:
-			break;
-		
-		}
 	}
 	
 	public ImageView getPic() {

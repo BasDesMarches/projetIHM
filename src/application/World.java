@@ -10,7 +10,7 @@ public class World {
 	
 	public World(Map m, Worm w) {
 		map = new MapView(m);
-		currentWorm =new WormView[1];
+		currentWorm = new WormView[1];
 		currentWorm[0] = new WormView(w, m);
 		ImageView worm = currentWorm[0].getPic();
 		worm.layoutXProperty().bind(currentWorm[0].xProperty().multiply(5));
@@ -20,8 +20,8 @@ public class World {
 		world = new Group();
 		world.getChildren().add(map.getView());
 		world.getChildren().add(worm);
-		world.getChildren().add(currentWorm[0].lifeBg);
-		world.getChildren().add(currentWorm[0].lifeValue);
+		world.getChildren().add(currentWorm[0].wormGroup);
+		
 	}
 	
 	public Group getWorld() {

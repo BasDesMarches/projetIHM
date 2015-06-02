@@ -15,6 +15,7 @@ public class Worm {
 	boolean choosingWeapon;
 	SimpleDoubleProperty xFire;
 	SimpleDoubleProperty yFire;
+	SimpleBooleanProperty isFiring;
 	
 	
 //	int paceCounter;
@@ -26,6 +27,7 @@ public class Worm {
 		xPos = new SimpleIntegerProperty(x);
 		yPos = new SimpleIntegerProperty(y);
 		onRight = new SimpleBooleanProperty(true);
+		isFiring = new SimpleBooleanProperty(false);
 		choosingWeapon = false;
 		weapon = w;
 		life = new SimpleIntegerProperty(100);
@@ -34,6 +36,7 @@ public class Worm {
 		
 	}
 	
+
 	private void elementalMove(){
 		
 		//move right or left
@@ -76,6 +79,7 @@ public class Worm {
 		
 		boolean hasHit = false;
 		char[][] grid = map.getMap();
+		isFiring.set(true);
 		double g = 0.01;
 		double xInit = (xPos.get() + 3)*5;
 		double yInit = (yPos.get() + 3)*5;
@@ -116,8 +120,8 @@ public class Worm {
 		default:
 			break;
 		}
-		
 		map.destroy((int)(yFire.get()/5), (int)(xFire.get()/5), weapon.getDamage());
+		isFiring.set(false);
 	}
 	
 	private boolean inBounds(int y, int x) {
@@ -166,5 +170,12 @@ public class Worm {
 	
 	public void setIsChoosingWeapon(boolean b) {
 		choosingWeapon = b;
+	}
+	public SimpleBooleanProperty IsFiring() {
+		return isFiring;
+	}
+
+	public void setIsFiring(SimpleBooleanProperty isFiring) {
+		this.isFiring = isFiring;
 	}
 }
