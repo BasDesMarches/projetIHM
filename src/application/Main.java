@@ -5,8 +5,6 @@ import event_handler.MouseReleasedEvent;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 
 
@@ -40,7 +38,7 @@ public class Main extends Application {
 			System.out.println("The BorderPane must be initialized for the EventFilter to be set.");
 			return;
 		}
-		s.addEventFilter(KeyEvent.KEY_PRESSED, new KeyPressedEvent(w));
-		s.addEventFilter(MouseEvent.MOUSE_RELEASED, new MouseReleasedEvent(w, world));
+		s.setOnKeyPressed(new KeyPressedEvent(w));
+		s.setOnMouseReleased(new MouseReleasedEvent(w, world));
 	}
 }

@@ -11,6 +11,7 @@ public class Worm {
 	SimpleIntegerProperty xPos;
 	SimpleIntegerProperty yPos;
 	SimpleBooleanProperty onRight;
+	boolean choosingWeapon;
 //	int paceCounter;
 	//new Team team;
 	
@@ -20,6 +21,7 @@ public class Worm {
 		xPos = new SimpleIntegerProperty(x);
 		yPos = new SimpleIntegerProperty(y);
 		onRight = new SimpleBooleanProperty(true);
+		choosingWeapon = false;
 		weapon = w;
 //		life=new SimpleIntegerProperty(100);
 	}
@@ -137,5 +139,13 @@ public class Worm {
 	
 	public SimpleBooleanProperty isOnRight() {
 		return onRight;
+	}
+	
+	public boolean isChoosingWeapon() {
+		return choosingWeapon;
+	}
+	
+	public void setIsChoosingWeapon(boolean b) {
+		choosingWeapon = b;
 	}
 }
