@@ -1,8 +1,11 @@
 package application;
 
+import javafx.animation.Interpolator;
+import javafx.animation.ScaleTransition;
 import javafx.scene.Group;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.TilePane;
+import javafx.util.Duration;
 
 public class World {
 	MapView map;
@@ -11,12 +14,13 @@ public class World {
 	WormView currentWorm;
 	Group world;
 	TilePane weaponChooser;
+	ScaleTransition weaponChooserTransition;
 	
 	public World(Map m, Worm w) {
 		map = new MapView(m);
 		currentWorm = new WormView(w, m);
 		ImageView worm = currentWorm.getPic();
-		weaponChooser = new TilePane();
+		weaponChooser = new TilePane(4,4);
 		initiateWeaponChooser();
 		worm.layoutXProperty().bind(currentWorm.xProperty().multiply(5));
 		worm.layoutYProperty().bind(currentWorm.yProperty().multiply(5));
@@ -33,9 +37,26 @@ public class World {
 		for (Weapon weapon : Weapon.values()) {
 			weaponChooser.getChildren().add(new ImageView(weapon.getImage()));
 		}
-		weaponChooser.setMaxWidth(64);
-		weaponChooser.setStyle("-fx-background-color : #000000");
-		weaponChooser.setVisible(false);
+		weaponChooser.setStyle("-fx-background-color : #222");
+//		weaponChooser.setVisible(false);
+		weaponChooser.scaleXProperty().set(0);
+		weaponChooser.scaleYProperty().set(0);
+		weaponChooserTransition = new ScaleTransition(new Duration(500), weaponChooser);
+		weaponChooserTransition.setInterpolator(Interpolator.EASE_IN);
+	}
+	
+	public void showWeaponChooser() {
+		weaponChooserTransition.setToX(1);
+		weaponChooserTransition.setToY(1);
+		weaponChooserTransition.play();
+		currentWorm.getWorm().setIsChoosingWeapon(true);
+	}
+	
+	public void hideWeaponChooser() {
+		weaponChooserTransition.setToX(0);
+		weaponChooserTransition.setToY(0);
+		weaponChooserTransition.play();
+		currentWorm.getWorm().setIsChoosingWeapon(false);
 	}
 	
 	public void nextWorm(){
@@ -89,15 +110,5 @@ public class World {
 
 	public WormView getCurrentWorm() {
 		return currentWorm;
-	}
-	
-	public void showWeaponChooser() {
-		weaponChooser.setVisible(true);
-		currentWorm.getWorm().setIsChoosingWeapon(true);
-	}
-	
-	public void hideWeaponChooser() {
-		weaponChooser.setVisible(false);
-		currentWorm.getWorm().setIsChoosingWeapon(false);
 	}
 }
