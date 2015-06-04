@@ -38,7 +38,7 @@ public class Main extends Application {
 			System.out.println("The BorderPane must be initialized for the EventFilter to be set.");
 			return;
 		}
-		s.setOnKeyPressed(new KeyPressedEvent(w));
+		s.setOnKeyPressed(new KeyPressedEvent(w, world));
 		s.setOnMouseReleased(new MouseReleasedEvent(w, world));
 	}
 }

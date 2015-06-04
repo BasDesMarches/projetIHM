@@ -15,14 +15,13 @@ public class WormView {
 	SimpleIntegerProperty xPos;
 	SimpleIntegerProperty yPos;
 	SimpleIntegerProperty life;
-	SimpleDoubleProperty xFire;
-	SimpleDoubleProperty yFire;
 	ImageView pic;
 	Rectangle lifeBg = new Rectangle(30,3, Color.BLACK);
 	Rectangle lifeValue = new Rectangle(30,3, Color.GREEN);
 	ImageView iV = new ImageView();
 	Image im = new Image("Images/Worms/bull1.png");
 	Group wormGroup = new Group();
+	//int team;
 
 	
 	public WormView(Worm w, Map map) {
@@ -38,7 +37,7 @@ public class WormView {
 		lifeBg.yProperty().bind(yPos.multiply(5).add(-10));
 		lifeValue.xProperty().bind(xPos.multiply(5));
 		lifeValue.yProperty().bind(yPos.multiply(5).add(-10));
-		lifeValue.widthProperty().bind(life.multiply(0.333));
+		lifeValue.widthProperty().bind(life.multiply(0.3));
 		pic.setViewport(new Rectangle2D(15, 15, 30, 30));
 		pic.scaleXProperty().bind(new When(w.isOnRight()).then(-1).otherwise(1));
 		while (yPos.get() >= 0 && (map.getMap()[yPos.get() + 4][xPos.get() + 2]) == '1') {
@@ -47,8 +46,13 @@ public class WormView {
 		while ((yPos.get() + 5 < 120) && (map.getMap()[yPos.get() + 5][xPos.get() + 2]) == '0') {
 			yPos.set(yPos.get() + 1);
 		}
-		iV.visibleProperty().bind(new When(w.isFiring).then(true).otherwise(false));
-		wormGroup.getChildren().addAll(iV, lifeValue, lifeBg);
+
+		iV.setImage(im);
+		iV.setViewport(new Rectangle2D(15, 15, 30, 30));
+		iV.layoutXProperty().bind(worm.xFireProperty().subtract(15));
+		iV.layoutYProperty().bind(worm.yFireProperty().subtract(15));
+		iV.visibleProperty().bind(worm.isFiring());
+		wormGroup.getChildren().addAll(iV, lifeBg, lifeValue);
 		
 	}
 	

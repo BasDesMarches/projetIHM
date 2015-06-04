@@ -16,9 +16,7 @@ public class Worm {
 	SimpleDoubleProperty xFire;
 	SimpleDoubleProperty yFire;
 	SimpleBooleanProperty isFiring;
-	
-	
-//	int paceCounter;
+	//	int paceCounter;
 	//new Team team;
 	
 	public Worm(String name, Map m, int x, int y, Weapon w){
@@ -79,19 +77,19 @@ public class Worm {
 		
 		boolean hasHit = false;
 		char[][] grid = map.getMap();
-		isFiring.set(true);
 		double g = 0.01;
 		double xInit = (xPos.get() + 3)*5;
 		double yInit = (yPos.get() + 3)*5;
 		double hInitSpeed = initSpeed*Math.cos(angle);
 		double vInitSpeed = initSpeed*Math.sin(angle);
+		isFiring.set(true);
 		switch (weapon) {
 		case ROCKET:
 			int i = 0;
 			try {
 				while (!hasHit) {
-					xFire.set(xInit + hInitSpeed*i);
-					yFire.set(yInit + vInitSpeed*i + g*i*i);
+					xFire.setValue(xInit + hInitSpeed*i);
+					yFire.setValue(yInit + vInitSpeed*i + g*i*i);
 					i++;
 					Thread.sleep(10);
 					if ((inBounds((int)(yFire.get()/5), (int)(xFire.get()/5)) && grid[(int)(yFire.get()/5)][(int)(xFire.get()/5)] == '1') || yFire.get()/5 > map.getYSize() + 20) {
@@ -121,7 +119,7 @@ public class Worm {
 			break;
 		}
 		map.destroy((int)(yFire.get()/5), (int)(xFire.get()/5), weapon.getDamage());
-		isFiring.set(false);
+		isFiring.set(true);
 	}
 	
 	private boolean inBounds(int y, int x) {
@@ -168,10 +166,30 @@ public class Worm {
 		return choosingWeapon;
 	}
 	
+	public SimpleDoubleProperty xFireProperty() {
+		return xFire;
+	}
+
+
+	public void setxFire(SimpleDoubleProperty xFire) {
+		this.xFire = xFire;
+	}
+
+
+	public SimpleDoubleProperty yFireProperty() {
+		return yFire;
+	}
+
+
+	public void setyFire(SimpleDoubleProperty yFire) {
+		this.yFire = yFire;
+	}
+
+
 	public void setIsChoosingWeapon(boolean b) {
 		choosingWeapon = b;
 	}
-	public SimpleBooleanProperty IsFiring() {
+	public SimpleBooleanProperty isFiring() {
 		return isFiring;
 	}
 
