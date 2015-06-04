@@ -17,9 +17,11 @@ public class Main extends Application {
 			
 			Map map = new Map("balistique.map");
 			Worm w = new Worm("Worm1", map, 10, 10, Weapon.ROCKET);
+			Worm w1 = new Worm("Worm1", map, 10, 20, Weapon.ROCKET);
 			World world = new World(map, w);
+			world.addWorm(w1, map);
 			
-			setTheEventFilters(scene, map, w, world);
+			setTheEventFilters(scene, map,w, world);
 			root.setCenter(world.getWorld());
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);

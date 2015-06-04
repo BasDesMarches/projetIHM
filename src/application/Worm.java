@@ -16,7 +16,7 @@ public class Worm {
 	SimpleDoubleProperty xFire;
 	SimpleDoubleProperty yFire;
 	SimpleBooleanProperty isFiring;
-	//	int paceCounter;
+	//int paceCounter;
 	//new Team team;
 	
 	public Worm(String name, Map m, int x, int y, Weapon w){

@@ -18,19 +18,22 @@ public class World {
 	
 	public World(Map m, Worm w) {
 		map = new MapView(m);
-		currentWorm = new WormView(w, m);
-		ImageView worm = currentWorm.getPic();
+		allWorms = new WormView[1];
+		allWorms[0] = new WormView(w, m);
+		currentWorm = allWorms[0];
+		//currentWorm = new WormView(w, m);
+		//ImageView worm = currentWorm.getPic();
 		weaponChooser = new TilePane(4,4);
 		initiateWeaponChooser();
-		worm.layoutXProperty().bind(currentWorm.xProperty().multiply(5));
-		worm.layoutYProperty().bind(currentWorm.yProperty().multiply(5));
-		
+		//wormIm.layoutXProperty().bind(currentWorm.xProperty().multiply(5));
+		//wormIm.layoutYProperty().bind(currentWorm.yProperty().multiply(5));
 		
 		world = new Group();
 		world.getChildren().add(map.getView());
-		world.getChildren().add(worm);
+		//world.getChildren().add(worm);
 		world.getChildren().add(weaponChooser);
-		world.getChildren().add(currentWorm.wormGroup);
+		//world.getChildren().add(currentWorm.wormGroup);
+		world.getChildren().add(allWorms[0].wormGroup);
 	}
 	
 	private void initiateWeaponChooser(){
@@ -77,7 +80,7 @@ public class World {
 		}
 	}
 	
-	private void addWorm(Worm w, Map m){
+	public void addWorm(Worm w, Map m){
 		 WormView newWorm = new WormView(w, m);
 		 WormView[] a = new WormView[allWorms.length+1];
 		 for (int i = 0; i<allWorms.length;i++){
@@ -85,6 +88,7 @@ public class World {
 		 }
 		 a[allWorms.length] = newWorm;
 		 allWorms = a;
+		 world.getChildren().add(allWorms[allWorms.length-1].wormGroup);
 	}
 	
 	private void removeWorm(int index){

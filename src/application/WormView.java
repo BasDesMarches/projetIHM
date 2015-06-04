@@ -19,6 +19,7 @@ public class WormView {
 	Rectangle lifeBg = new Rectangle(30,3, Color.BLACK);
 	Rectangle lifeValue = new Rectangle(30,3, Color.GREEN);
 	ImageView iV = new ImageView();
+	ImageView wormIm= new ImageView();
 	Image im = new Image("Images/Worms/bull1.png");
 	Group wormGroup = new Group();
 	//int team;
@@ -33,6 +34,9 @@ public class WormView {
 		life = new SimpleIntegerProperty();
 		life.bindBidirectional(worm.lifeProperty());
 		pic = new ImageView(new Image("Images/Worms/test2.gif"));
+		wormIm = this.getPic();
+		wormIm.layoutXProperty().bind(this.xProperty().multiply(5));
+		wormIm.layoutYProperty().bind(this.yProperty().multiply(5));
 		lifeBg.xProperty().bind(xPos.multiply(5));
 		lifeBg.yProperty().bind(yPos.multiply(5).add(-10));
 		lifeValue.xProperty().bind(xPos.multiply(5));
@@ -52,7 +56,7 @@ public class WormView {
 		iV.layoutXProperty().bind(worm.xFireProperty().subtract(15));
 		iV.layoutYProperty().bind(worm.yFireProperty().subtract(15));
 		iV.visibleProperty().bind(worm.isFiring());
-		wormGroup.getChildren().addAll(iV, lifeBg, lifeValue);
+		wormGroup.getChildren().addAll(wormIm, iV, lifeBg, lifeValue);
 		
 	}
 	
