@@ -17,11 +17,11 @@ public class Main extends Application {
 			
 			Map map = new Map("balistique.map");
 			Worm w = new Worm("Worm1", map, 10, 10, Weapon.ROCKET);
-			Worm w1 = new Worm("Worm1", map, 10, 20, Weapon.ROCKET);
+			Worm w1 = new Worm("Worm1", map, 20, 10, Weapon.ROCKET);
 			World world = new World(map, w);
 			world.addWorm(w1, map);
 			
-			setTheEventFilters(scene, map,w, world);
+			setTheEventFilters(scene, map,world.currentWorm.worm, world);
 			root.setCenter(world.getWorld());
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);
@@ -40,7 +40,7 @@ public class Main extends Application {
 			System.out.println("The BorderPane must be initialized for the EventFilter to be set.");
 			return;
 		}
-		s.setOnKeyPressed(new KeyPressedEvent(w, world));
+		s.setOnKeyPressed(new KeyPressedEvent(/*w,*/ world));
 		s.setOnMouseReleased(new MouseReleasedEvent(w, world));
 	}
 }

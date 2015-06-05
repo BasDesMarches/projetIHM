@@ -11,7 +11,7 @@ public class World {
 	MapView map;
 	WormView[] allWorms;
 	int index=0;
-	WormView currentWorm;
+	public WormView currentWorm;
 	Group world;
 	TilePane weaponChooser;
 	ScaleTransition weaponChooserTransition;

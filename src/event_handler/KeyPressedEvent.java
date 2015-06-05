@@ -8,13 +8,13 @@ import javafx.scene.input.KeyEvent;
 
 public class KeyPressedEvent implements EventHandler<KeyEvent>{
 //public class KeyPressedEvent implements EventHandler<MouseEvent>{
-	Worm w;
+	//Worm w;
 	Map m;
 	World wo;
 	
-	public KeyPressedEvent(Worm w, World wo) {
+	public KeyPressedEvent(/*Worm w,*/ World wo) {
 		super();
-		this.w = w;
+		//this.w = w;
 		this.wo=wo;
 		
 	}
@@ -24,16 +24,19 @@ public class KeyPressedEvent implements EventHandler<KeyEvent>{
 		switch (event.getCode()) {
 		case D:
 		case RIGHT:
-			w.moveRight();
+			wo.currentWorm.getWorm().moveRight();
+			//w.moveRight();
 			break;
 			
 		case Q:
 		case LEFT:
-			w.moveLeft();
+			wo.currentWorm.getWorm().moveLeft();
+			//w.moveLeft();
 			break;
 
 		case ENTER:
 			wo.nextWorm();
+			break;
 		default:
 			break;
 		}
