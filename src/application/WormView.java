@@ -8,6 +8,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.RectangleBuilder;
 
 public class WormView {
 	Worm worm;
@@ -16,10 +17,12 @@ public class WormView {
 	ImageView pic;
 	Rectangle lifeBg = new Rectangle(30,3, Color.BLACK);
 	Rectangle lifeValue = new Rectangle(30,3, Color.GREEN);
+	Rectangle hitbox = new Rectangle(30,30);
 	ImageView iV = new ImageView();
 	ImageView wormIm= new ImageView();
 	Image im = new Image("Images/Worms/bull1.png");
 	Group wormGroup = new Group();
+	
 	//int team;
 
 	
@@ -38,6 +41,9 @@ public class WormView {
 		lifeValue.xProperty().bind(xPos.multiply(5));
 		lifeValue.yProperty().bind(yPos.multiply(5).add(-10));
 		lifeValue.widthProperty().bind(worm.lifeProperty().multiply(0.3));
+		hitbox.xProperty().bind(xPos.multiply(5));
+		hitbox.yProperty().bind(yPos.multiply(5));
+		hitbox.setVisible(false);
 		pic.setViewport(new Rectangle2D(15, 15, 30, 30));
 		pic.scaleXProperty().bind(new When(w.isOnRight()).then(-1).otherwise(1));
 		while (yPos.get() >= 0 && (map.getMap()[yPos.get() + 4][xPos.get() + 2]) == '1') {
@@ -52,7 +58,7 @@ public class WormView {
 		iV.layoutXProperty().bind(worm.xFireProperty().subtract(15));
 		iV.layoutYProperty().bind(worm.yFireProperty().subtract(15));
 		iV.visibleProperty().bind(worm.isFiring());
-		wormGroup.getChildren().addAll(wormIm, iV, lifeBg, lifeValue);
+		wormGroup.getChildren().addAll(wormIm,hitbox, iV, lifeBg, lifeValue);
 		
 	}
 	
