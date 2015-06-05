@@ -1,7 +1,6 @@
 package application;
 
 import javafx.beans.binding.When;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
@@ -14,7 +13,6 @@ public class WormView {
 	Worm worm;
 	SimpleIntegerProperty xPos;
 	SimpleIntegerProperty yPos;
-	SimpleIntegerProperty life;
 	ImageView pic;
 	Rectangle lifeBg = new Rectangle(30,3, Color.BLACK);
 	Rectangle lifeValue = new Rectangle(30,3, Color.GREEN);
@@ -31,8 +29,6 @@ public class WormView {
 		xPos.bindBidirectional(worm.xPosProperty());
 		yPos = new SimpleIntegerProperty();
 		yPos.bindBidirectional(worm.yPosProperty());
-		life = new SimpleIntegerProperty();
-		life.bindBidirectional(worm.lifeProperty());
 		pic = new ImageView(new Image("Images/Worms/test2.gif"));
 		wormIm = this.getPic();
 		wormIm.layoutXProperty().bind(this.xProperty().multiply(5));
@@ -41,7 +37,7 @@ public class WormView {
 		lifeBg.yProperty().bind(yPos.multiply(5).add(-10));
 		lifeValue.xProperty().bind(xPos.multiply(5));
 		lifeValue.yProperty().bind(yPos.multiply(5).add(-10));
-		lifeValue.widthProperty().bind(life.multiply(0.3));
+		lifeValue.widthProperty().bind(worm.lifeProperty().multiply(0.3));
 		pic.setViewport(new Rectangle2D(15, 15, 30, 30));
 		pic.scaleXProperty().bind(new When(w.isOnRight()).then(-1).otherwise(1));
 		while (yPos.get() >= 0 && (map.getMap()[yPos.get() + 4][xPos.get() + 2]) == '1') {
