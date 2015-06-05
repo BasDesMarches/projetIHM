@@ -1,5 +1,6 @@
 package application;
 
+import tasks.Fire;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -74,56 +75,14 @@ public class Worm {
 	}
 	
 	public void fire(double angle, double initSpeed) {
-		
-		boolean hasHit = false;
-		char[][] grid = map.getMap();
-		double g = 0.01;
 		double xInit = (xPos.get() + 3)*5;
 		double yInit = (yPos.get() + 3)*5;
-		double hInitSpeed = initSpeed*Math.cos(angle);
-		double vInitSpeed = initSpeed*Math.sin(angle);
 		isFiring.set(true);
-		switch (weapon) {
-		case ROCKET:
-			int i = 0;
-			try {
-				while (!hasHit) {
-					xFire.setValue(xInit + hInitSpeed*i);
-					yFire.setValue(yInit + vInitSpeed*i + g*i*i);
-					i++;
-					Thread.sleep(10);
-					if ((inBounds((int)(yFire.get()/5), (int)(xFire.get()/5)) && grid[(int)(yFire.get()/5)][(int)(xFire.get()/5)] == '1') || yFire.get()/5 > map.getYSize() + 20) {
-						hasHit = true;
-					}
-				}
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-			break;
-			
-		case GUN:
-			xFire.set(xInit);
-			yFire.set(yInit);
-			int j = 0;
-			while (!hasHit && inBounds((int)(yFire.get()/5), (int)(xFire.get()/5))) {
-				if (grid[(int)(yFire.get()/5)][(int)(xFire.get()/5)] == '1') {
-					hasHit = true;
-				}
-				j++;
-				xFire.set(xInit + hInitSpeed*j);
-				yFire.set(yInit + vInitSpeed*j);
-			}
-			break;
-
-		default:
-			break;
-		}
-		map.destroy((int)(yFire.get()/5), (int)(xFire.get()/5), weapon.getDamage());
-		isFiring.set(true);
-	}
-	
-	private boolean inBounds(int y, int x) {
-		return (0 <= y && y < map.getYSize() && 0 <= x && x < map.getXSize());
+		xFire.set(xPos.get());
+		yFire.set(yPos.get());
+		Fire f = new Fire(xInit, yInit, angle, initSpeed, map, weapon, xFire, yFire, isFiring);
+		Thread th = new Thread(f);
+		th.start();
 	}
 	
 	public void  wound(int i){
