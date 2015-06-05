@@ -18,6 +18,7 @@ public class World {
 	WormView currentWorm;
 	Group world;
 	TilePane weaponChooser;
+	
 	ScaleTransition weaponChooserTransition1;
 	TranslateTransition weaponChooserTransition2;
 	ParallelTransition weaponChooserTransition;
@@ -27,18 +28,11 @@ public class World {
 		allWorms = new WormView[1];
 		allWorms[0] = new WormView(w, m);
 		currentWorm = allWorms[0];
-		// currentWorm = new WormView(w, m);
-		// ImageView worm = currentWorm.getPic();
 		weaponChooser = new TilePane(4, 4);
 		initiateWeaponChooser();
-		// wormIm.layoutXProperty().bind(currentWorm.xProperty().multiply(5));
-		// wormIm.layoutYProperty().bind(currentWorm.yProperty().multiply(5));
-
 		world = new Group();
 		world.getChildren().add(map.getView());
-		// world.getChildren().add(worm);
 		world.getChildren().add(weaponChooser);
-		// world.getChildren().add(currentWorm.wormGroup);
 		world.getChildren().add(allWorms[0].wormGroup);
 	}
 
@@ -98,6 +92,10 @@ public class World {
 			if (Math.pow(allWorms[i].getWorm().xPos.get() - currentWorm.getWorm().xFire.get(), 2) + Math.pow(allWorms[i].getWorm().yPos.get() - currentWorm.getWorm().yFire.get(), 2) < Math.pow(rad, 2)) {
 				allWorms[i].getWorm().life.subtract(dam);
 			}
+			if (allWorms[i].getWorm().life.get()<=0){
+				removeWorm(i);
+			}
+		
 		}
 	}
 
@@ -121,6 +119,10 @@ public class World {
 			a[i - 1] = allWorms[i];
 		}
 		allWorms = a;
+	}
+	
+	private void turn(){
+		
 	}
 
 	// ========== Getters and setters ==========
