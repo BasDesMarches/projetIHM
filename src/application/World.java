@@ -1,9 +1,13 @@
 package application;
 
 import javafx.animation.Interpolator;
+import javafx.animation.ParallelTransition;
 import javafx.animation.ScaleTransition;
+import javafx.animation.TranslateTransition;
+import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.TilePane;
 import javafx.util.Duration;
 
@@ -14,7 +18,9 @@ public class World {
 	WormView currentWorm;
 	Group world;
 	TilePane weaponChooser;
-	ScaleTransition weaponChooserTransition;
+	ScaleTransition weaponChooserTransition1;
+	TranslateTransition weaponChooserTransition2;
+	ParallelTransition weaponChooserTransition;
 
 	public World(Map m, Worm w) {
 		map = new MapView(m);
@@ -37,28 +43,42 @@ public class World {
 	}
 
 	private void initiateWeaponChooser() {
+		ImageView tempWeaponImage;
 		for (Weapon weapon : Weapon.values()) {
-			weaponChooser.getChildren().add(new ImageView(weapon.getImage()));
+			tempWeaponImage = new ImageView(weapon.getImage());
+			tempWeaponImage.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+				@Override
+				public void handle(MouseEvent event) {
+					currentWorm.getWorm().setWeapon(weapon);
+				}
+			});
+			weaponChooser.getChildren().add(tempWeaponImage);
 		}
 		weaponChooser.setStyle("-fx-background-color : #222");
-		// weaponChooser.setVisible(false);
+		weaponChooser.setTranslateX(-(4*4 + 5*Weapon.GUN.getImage().getWidth()) / 2);
 		weaponChooser.scaleXProperty().set(0);
 		weaponChooser.scaleYProperty().set(0);
-		weaponChooserTransition = new ScaleTransition(new Duration(500),
-				weaponChooser);
-		weaponChooserTransition.setInterpolator(Interpolator.EASE_IN);
+		int durationTime = 500;
+		weaponChooserTransition1 = new ScaleTransition(new Duration(durationTime), weaponChooser);
+		weaponChooserTransition1.setInterpolator(Interpolator.EASE_IN);
+		weaponChooserTransition2 = new TranslateTransition(new Duration(durationTime), weaponChooser);
+		weaponChooserTransition2.setInterpolator(Interpolator.EASE_IN);
+		weaponChooserTransition = new ParallelTransition(weaponChooserTransition1, weaponChooserTransition2);
 	}
 
 	public void showWeaponChooser() {
-		weaponChooserTransition.setToX(1);
-		weaponChooserTransition.setToY(1);
+		weaponChooserTransition1.setToX(1);
+		weaponChooserTransition1.setToY(1);
+		weaponChooserTransition2.setToX(0);
 		weaponChooserTransition.play();
 		currentWorm.getWorm().setIsChoosingWeapon(true);
 	}
 
 	public void hideWeaponChooser() {
-		weaponChooserTransition.setToX(0);
-		weaponChooserTransition.setToY(0);
+		weaponChooserTransition1.setToX(0);
+		weaponChooserTransition1.setToY(0);
+		weaponChooserTransition2.setToX(- weaponChooser.getWidth() / 2);
 		weaponChooserTransition.play();
 		currentWorm.getWorm().setIsChoosingWeapon(false);
 	}
