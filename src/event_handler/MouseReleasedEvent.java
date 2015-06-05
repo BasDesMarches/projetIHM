@@ -6,17 +6,16 @@ import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 
 public class MouseReleasedEvent implements EventHandler<MouseEvent>{
-	Worm w;
 	World world;
 
-	public MouseReleasedEvent(Worm w, World world) {
+	public MouseReleasedEvent(World world) {
 		super();
-		this.w = w;
 		this.world = world;
 	}
 
 	@Override
 	public void handle(MouseEvent event) {
+		Worm w = world.getCurrentWorm().getWorm();
 		switch (event.getButton()) {
 		case PRIMARY:
 			if(w.isChoosingWeapon()){

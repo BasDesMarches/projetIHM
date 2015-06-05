@@ -1,7 +1,6 @@
 package application;
 
 import javafx.beans.binding.When;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
