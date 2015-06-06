@@ -1,8 +1,10 @@
 package views;
 
+import java.util.ArrayList;
+
 import application.Map;
+import application.Team;
 import application.Weapon;
-import application.Worm;
 import javafx.animation.Interpolator;
 import javafx.animation.ParallelTransition;
 import javafx.animation.ScaleTransition;
@@ -16,28 +18,39 @@ import javafx.util.Duration;
 
 public class WorldView {
 	MapView map;
-	WormView[] allWorms;
-	int index = 0;
 	WormView currentWorm;
 	Group world;
 	TilePane weaponChooser;
+	ArrayList<TeamView> team;
+	TeamView currentTeam;
+	int currentWormIndex;
 	
 	ScaleTransition weaponChooserTransition1;
 	TranslateTransition weaponChooserTransition2;
 	ParallelTransition weaponChooserTransition;
 
-	public WorldView(Map m, Worm w) {
+	public WorldView(Map m, ArrayList<Team> teams) {
 		map = new MapView(m);
-		allWorms = new WormView[1];
-		allWorms[0] = new WormView(w, m);
-		currentWorm = allWorms[0];
-		currentWorm.getWorm().setCurrentWorm(true);
 		weaponChooser = new TilePane(4, 4);
 		initiateWeaponChooser();
+		currentWormIndex = 0;
+		
+		team = new ArrayList<TeamView>(teams.size());
+		for (Team t : teams) {
+			team.add(new TeamView(t, m));
+		}
+		currentTeam = team.get(0);
+		currentWorm = currentTeam.getMembers().get(currentWormIndex);
+		currentWorm.getWorm().setCurrentWorm(true);
+		
 		world = new Group();
 		world.getChildren().add(map.getView());
 		world.getChildren().add(weaponChooser);
-		world.getChildren().add(allWorms[0].wormGroup);
+		for (TeamView t : team) {
+			for (WormView w : t.getMembers()) {
+				world.getChildren().add(w.getWormGroup());
+			}
+		}
 	}
 
 	private void initiateWeaponChooser() {
@@ -83,17 +96,30 @@ public class WorldView {
 
 	public void nextWorm() {
 		currentWorm.getWorm().setCurrentWorm(false);
-		if (index < allWorms.length - 1) {
-			currentWorm = allWorms[index + 1];
-			index++;
-		} else {
-			currentWorm = allWorms[0];
-			index = 0;
+		boolean cont = true;
+		while (cont && currentWormIndex < currentTeam.getMembers().size() - 1) {
+			currentWormIndex++;
+			currentWorm = currentTeam.getMembers().get(currentWormIndex);
+			// Stops the loops if the new worm is valid
+			if (currentWorm.getWorm().lifeProperty().get() > 0) {
+				cont = false;
+			}
+		}
+		// Starts over from the begining if the end of the array was reached with no valid worm found
+		if (cont) {
+			currentWormIndex = -1; // The last element of the array is also the -1th
+		}
+		while (cont && currentWormIndex < currentTeam.getMembers().size() - 1) {
+			currentWormIndex++;
+			currentWorm = currentTeam.getMembers().get(currentWormIndex);
+			if (currentWorm.getWorm().lifeProperty().get() > 0) {
+				cont = false;
+			}
 		}
 		currentWorm.getWorm().setCurrentWorm(true);
 	}
 
-	private void damages(int dam, int rad) {
+/*	private void damages(int dam, int rad) {
 		for (int i = 0; i < allWorms.length; i++) {
 			if (Math.pow(allWorms[i].getWorm().xPosProperty().get() - currentWorm.getWorm().xFireProperty().get(), 2) + Math.pow(allWorms[i].getWorm().yPosProperty().get() - currentWorm.getWorm().yFireProperty().get(), 2) < Math.pow(rad, 2)) {
 				allWorms[i].getWorm().lifeProperty().subtract(dam);
@@ -103,9 +129,9 @@ public class WorldView {
 			}
 		
 		}
-	}
+	}*/
 
-	public void addWorm(Worm w, Map m) {
+/*	public void addWorm(Worm w, Map m) {
 		WormView newWorm = new WormView(w, m);
 		WormView[] a = new WormView[allWorms.length + 1];
 		for (int i = 0; i < allWorms.length; i++) {
@@ -125,7 +151,7 @@ public class WorldView {
 			a[i - 1] = allWorms[i];
 		}
 		allWorms = a;
-	}
+	}*/
 	
 	private void turn(){
 		

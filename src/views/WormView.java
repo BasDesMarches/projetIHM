@@ -27,7 +27,6 @@ public class WormView {
 	
 	//int team;
 
-	
 	public WormView(Worm w, Map map) {
 		worm = w;
 		xPos = new SimpleIntegerProperty();
@@ -74,6 +73,10 @@ public class WormView {
 
 	public Worm getWorm() {
 		return worm;
+	}
+	
+	public Group getWormGroup() {
+		return wormGroup;
 	}
 
 	public SimpleIntegerProperty xProperty() {

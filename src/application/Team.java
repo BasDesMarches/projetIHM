@@ -2,13 +2,17 @@ package application;
 
 import java.util.ArrayList;
 
+import javafx.scene.paint.Color;
+
 public class Team {
 	String name;
+	Color color;
 	ArrayList<Worm> members;
 	
-	public Team(String name, int number) {
+	public Team(String name, Color color, int number) {
 		super();
 		this.name = name;
+		this.color = color;
 		members = new ArrayList<Worm>(number);
 	}
 
@@ -37,6 +41,14 @@ public class Team {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public Color getColor() {
+		return color;
+	}
+
+	public void setColor(Color color) {
+		this.color = color;
 	}
 
 	public ArrayList<Worm> getMembers() {

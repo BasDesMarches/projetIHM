@@ -1,5 +1,7 @@
 package application;
 
+import java.util.ArrayList;
+
 import views.WorldView;
 import event_handler.KeyPressedEvent;
 import event_handler.MouseReleasedEvent;
@@ -7,6 +9,7 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.paint.Color;
 
 
 public class Main extends Application {
@@ -17,10 +20,15 @@ public class Main extends Application {
 			Scene scene = new Scene(root,800,600);
 			
 			Map map = new Map("balistique.map");
-			Worm w = new Worm("Worm1", map, 10, 10, Weapon.ROCKET);
-			Worm w1 = new Worm("Worm1", map, 20, 10, Weapon.ROCKET);
-			WorldView world = new WorldView(map, w);
-			world.addWorm(w1, map);
+			Team red = new Team("Red", Color.RED, 1);
+			red.addMember(new Worm("Worm1", map, 5, 10, Weapon.ROCKET));
+			red.addMember(new Worm("Worm2", map, 25, 10, Weapon.ROCKET));
+			Team blue = new Team("Blue", Color.BLUE, 1);
+			blue.addMember(new Worm("Worm3", map, 15, 10, Weapon.ROCKET));
+			ArrayList<Team> teams = new ArrayList<Team>(2);
+			teams.add(red);
+			teams.add(blue);
+			WorldView world = new WorldView(map, teams);
 			
 			setTheEventFilters(scene, map, world);
 			root.setCenter(world.getWorld());

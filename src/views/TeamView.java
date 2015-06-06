@@ -2,19 +2,16 @@ package views;
 
 import java.util.ArrayList;
 
-import javafx.scene.paint.Color;
 import application.Map;
 import application.Team;
 import application.Worm;
 
 public class TeamView {
 	Team team;
-	Color color;
 	ArrayList<WormView> members;
 	
-	public TeamView(Team team, Color color, Map map) {
+	public TeamView(Team team, Map map) {
 		this.team = team;
-		this.color = color;
 		members = new ArrayList<WormView>(team.getMembers().size());
 		for (Worm worm : team.getMembers()) {
 			members.add(new WormView(worm, map));
@@ -28,14 +25,6 @@ public class TeamView {
 
 	public void setTeam(Team team) {
 		this.team = team;
-	}
-
-	public Color getColor() {
-		return color;
-	}
-
-	public void setColor(Color color) {
-		this.color = color;
 	}
 
 	public ArrayList<WormView> getMembers() {
