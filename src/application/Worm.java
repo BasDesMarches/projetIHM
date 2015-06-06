@@ -31,8 +31,8 @@ public class Worm {
 		choosingWeapon = false;
 		weapon = w;
 		life = new SimpleIntegerProperty(100);
-		xFire= new SimpleDoubleProperty(x);
-		yFire= new SimpleDoubleProperty(y);
+		xFire = new SimpleDoubleProperty(x);
+		yFire = new SimpleDoubleProperty(y);
 		
 	}
 	
@@ -80,8 +80,8 @@ public class Worm {
 			return;
 		}
 		isFiring.set(true);
-		xFire.set(xPos.get());
-		yFire.set(yPos.get());
+		xFire.set((xPos.get() + 3)*5);
+		yFire.set((yPos.get() + 3)*5);
 		Fire f = new Fire(angle, initSpeed, this);
 		Thread th = new Thread(f);
 		th.start();
@@ -91,6 +91,7 @@ public class Worm {
 		life.set(life.get()-i);
 	}
 	
+	// ========== Getters and setters ==========
 	public SimpleIntegerProperty lifeProperty() {
 		return life;
 	}

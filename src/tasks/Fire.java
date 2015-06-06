@@ -63,30 +63,19 @@ public class Fire extends Task<Void>{
 				break;
 				
 			case GUN:
-				Platform.runLater(new Runnable() {
-					
-					@Override
-					public void run() {
-						xFire.setValue(xInit);
-						yFire.setValue(yInit);
-					}
-				});
+				double xf = xInit;
+				double yf = yInit;
 				int j = 0;
-				while (!hasHit && inBounds((int)(yFire.get()/5), (int)(xFire.get()/5))) {
-					if (grid[(int)(yFire.get()/5)][(int)(xFire.get()/5)] == '1') {
+				while (!hasHit && inBounds((int)(yf/5), (int)(xf/5))) {
+					if (grid[(int)(yf/5)][(int)(xf/5)] == '1') {
 						hasHit = true;
 					}
+					xf = xInit + hInitSpeed*j;
+					yf = yInit + vInitSpeed*j;
 					j++;
-					final int j2 = j;
-					Platform.runLater(new Runnable() {
-						
-						@Override
-						public void run() {
-							xFire.setValue(xInit + hInitSpeed*j2);
-							yFire.setValue(yInit + vInitSpeed*j2);
-						}
-					});
 				}
+				xFire.set(xf);
+				yFire.set(yf);
 				break;
 	
 			default:
