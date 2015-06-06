@@ -1,6 +1,6 @@
 package event_handler;
 
-import views.World;
+import views.WorldView;
 import application.Map;
 import application.Worm;
 import javafx.event.EventHandler;
@@ -8,9 +8,9 @@ import javafx.scene.input.KeyEvent;
 
 public class KeyPressedEvent implements EventHandler<KeyEvent>{
 	Map m;
-	World wo;
+	WorldView wo;
 	
-	public KeyPressedEvent(World wo) {
+	public KeyPressedEvent(WorldView wo) {
 		super();
 		this.wo=wo;
 		

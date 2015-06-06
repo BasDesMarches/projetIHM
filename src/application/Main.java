@@ -1,6 +1,6 @@
 package application;
 
-import views.World;
+import views.WorldView;
 import event_handler.KeyPressedEvent;
 import event_handler.MouseReleasedEvent;
 import javafx.application.Application;
@@ -19,7 +19,7 @@ public class Main extends Application {
 			Map map = new Map("balistique.map");
 			Worm w = new Worm("Worm1", map, 10, 10, Weapon.ROCKET);
 			Worm w1 = new Worm("Worm1", map, 20, 10, Weapon.ROCKET);
-			World world = new World(map, w);
+			WorldView world = new WorldView(map, w);
 			world.addWorm(w1, map);
 			
 			setTheEventFilters(scene, map, world);
@@ -36,7 +36,7 @@ public class Main extends Application {
 		launch(args);
 	}
 
-	private void setTheEventFilters(Scene s, Map map, World world) {
+	private void setTheEventFilters(Scene s, Map map, WorldView world) {
 		if (s == null) {
 			System.out.println("The BorderPane must be initialized for the EventFilter to be set.");
 			return;

@@ -14,7 +14,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.TilePane;
 import javafx.util.Duration;
 
-public class World {
+public class WorldView {
 	MapView map;
 	WormView[] allWorms;
 	int index = 0;
@@ -26,7 +26,7 @@ public class World {
 	TranslateTransition weaponChooserTransition2;
 	ParallelTransition weaponChooserTransition;
 
-	public World(Map m, Worm w) {
+	public WorldView(Map m, Worm w) {
 		map = new MapView(m);
 		allWorms = new WormView[1];
 		allWorms[0] = new WormView(w, m);

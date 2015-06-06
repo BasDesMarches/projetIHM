@@ -1,14 +1,14 @@
 package event_handler;
 
-import views.World;
+import views.WorldView;
 import application.Worm;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 
 public class MouseReleasedEvent implements EventHandler<MouseEvent>{
-	World world;
+	WorldView world;
 
-	public MouseReleasedEvent(World world) {
+	public MouseReleasedEvent(WorldView world) {
 		super();
 		this.world = world;
 	}
