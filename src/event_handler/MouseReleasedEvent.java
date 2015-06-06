@@ -1,6 +1,6 @@
 package event_handler;
 
-import application.World;
+import views.World;
 import application.Worm;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;

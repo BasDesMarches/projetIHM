@@ -13,10 +13,11 @@ public class Worm {
 	SimpleIntegerProperty xPos;
 	SimpleIntegerProperty yPos;
 	SimpleBooleanProperty onRight;
+	SimpleBooleanProperty currentWorm;
 	boolean choosingWeapon;
 	SimpleDoubleProperty xFire;
 	SimpleDoubleProperty yFire;
-	SimpleBooleanProperty isFiring;
+	public static SimpleBooleanProperty isFiring = new SimpleBooleanProperty(false);
 	//int paceCounter;
 	//new Team team;
 	
@@ -26,7 +27,7 @@ public class Worm {
 		xPos = new SimpleIntegerProperty(x);
 		yPos = new SimpleIntegerProperty(y);
 		onRight = new SimpleBooleanProperty(true);
-		isFiring = new SimpleBooleanProperty(false);
+		currentWorm = new SimpleBooleanProperty(false);
 		choosingWeapon = false;
 		weapon = w;
 		life = new SimpleIntegerProperty(100);
@@ -75,12 +76,13 @@ public class Worm {
 	}
 	
 	public void fire(double angle, double initSpeed) {
-		double xInit = (xPos.get() + 3)*5;
-		double yInit = (yPos.get() + 3)*5;
+		if (isFiring.get()) {
+			return;
+		}
 		isFiring.set(true);
 		xFire.set(xPos.get());
 		yFire.set(yPos.get());
-		Fire f = new Fire(xInit, yInit, angle, initSpeed, map, weapon, xFire, yFire, isFiring);
+		Fire f = new Fire(angle, initSpeed, this);
 		Thread th = new Thread(f);
 		th.start();
 	}
@@ -105,6 +107,11 @@ public class Worm {
 		return name;
 	}
 
+	public Map getMap() {
+		return map;
+	}
+
+
 	public Weapon getWeapon() {
 		return weapon;
 	}
@@ -117,6 +124,16 @@ public class Worm {
 		return onRight;
 	}
 	
+	public SimpleBooleanProperty isCurrentWorm() {
+		return currentWorm;
+	}
+
+
+	public void setCurrentWorm(boolean b) {
+		currentWorm.set(b);
+	}
+
+
 	public void setLife(SimpleIntegerProperty life) {
 		this.life = life;
 	}
@@ -147,12 +164,5 @@ public class Worm {
 
 	public void setIsChoosingWeapon(boolean b) {
 		choosingWeapon = b;
-	}
-	public SimpleBooleanProperty isFiring() {
-		return isFiring;
-	}
-
-	public void setIsFiring(SimpleBooleanProperty isFiring) {
-		this.isFiring = isFiring;
 	}
 }

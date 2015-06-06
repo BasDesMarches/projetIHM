@@ -1,5 +1,8 @@
-package application;
+package views;
 
+import application.Map;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -12,13 +15,10 @@ public class MapView {
 	Map m;
 	ImageView bg;
 	ImageView fg;
-//	GridPane ground;
 	GridPane map;
-//	StackPane result;
 	
 	public MapView(Map m) {
 		squareSize = 5;
-//		ground = new GridPane();
 		this.m = m;
 		map = new GridPane();
 		char cases[][] = m.getMap();
@@ -31,6 +31,17 @@ public class MapView {
 				map.add(rect, j, i);
 			}
 		}
+		m.getHasChanged().addListener(new ChangeListener<Boolean>() {
+
+			@Override
+			public void changed(ObservableValue<? extends Boolean> observable,
+					Boolean oldValue, Boolean newValue) {
+				if (newValue) {
+					redrawMap();
+					m.getHasChanged().set(false);
+				}
+			}
+		});
 	}
 	
 	public void redrawMap() {

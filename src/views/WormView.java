@@ -1,7 +1,7 @@
-package application;
+package views;
 
-import org.omg.CORBA.Current;
-
+import application.Map;
+import application.Worm;
 import javafx.beans.binding.When;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.geometry.Rectangle2D;
@@ -20,7 +20,7 @@ public class WormView {
 	Rectangle lifeValue = new Rectangle(30,3, Color.GREEN);
 	Rectangle hitbox = new Rectangle(30,30);
 	Rectangle fireBox = new Rectangle(5,5);
-	ImageView iV = new ImageView();
+	ImageView bullet = new ImageView();
 	ImageView wormIm= new ImageView();
 	Image im = new Image("Images/Worms/bull1.png");
 	Group wormGroup = new Group();
@@ -35,6 +35,8 @@ public class WormView {
 		yPos = new SimpleIntegerProperty();
 		yPos.bindBidirectional(worm.yPosProperty());
 		pic = new ImageView(new Image("Images/Worms/test2.gif"));
+		pic.setViewport(new Rectangle2D(15, 15, 30, 30));
+		pic.scaleXProperty().bind(new When(w.isOnRight()).then(-1).otherwise(1));
 		wormIm = this.getPic();
 		wormIm.layoutXProperty().bind(this.xProperty().multiply(5));
 		wormIm.layoutYProperty().bind(this.yProperty().multiply(5));
@@ -49,8 +51,7 @@ public class WormView {
 		fireBox.xProperty().bind(worm.xFireProperty());
 		fireBox.yProperty().bind(worm.yFireProperty());
 		fireBox.setVisible(false);
-		pic.setViewport(new Rectangle2D(15, 15, 30, 30));
-		pic.scaleXProperty().bind(new When(w.isOnRight()).then(-1).otherwise(1));
+		
 		while (yPos.get() >= 0 && (map.getMap()[yPos.get() + 4][xPos.get() + 2]) == '1') {
 			yPos.set(yPos.get() - 1);
 		}
@@ -58,12 +59,12 @@ public class WormView {
 			yPos.set(yPos.get() + 1);
 		}
 
-		iV.setImage(im);
-		iV.setViewport(new Rectangle2D(15, 15, 30, 30));
-		iV.layoutXProperty().bind(worm.xFireProperty().subtract(15));
-		iV.layoutYProperty().bind(worm.yFireProperty().subtract(15));
-		iV.visibleProperty().bind(worm.isFiring());
-		wormGroup.getChildren().addAll(wormIm,hitbox,fireBox, iV, lifeBg, lifeValue);
+		bullet.setImage(im);
+		bullet.setViewport(new Rectangle2D(15, 15, 30, 30));
+		bullet.layoutXProperty().bind(worm.xFireProperty().subtract(15));
+		bullet.layoutYProperty().bind(worm.yFireProperty().subtract(15));
+		bullet.visibleProperty().bind(Worm.isFiring.and(worm.isCurrentWorm()));
+		wormGroup.getChildren().addAll(wormIm,hitbox,fireBox, bullet, lifeBg, lifeValue);
 		
 	}
 	

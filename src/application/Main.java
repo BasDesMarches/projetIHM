@@ -1,5 +1,6 @@
 package application;
 
+import views.World;
 import event_handler.KeyPressedEvent;
 import event_handler.MouseReleasedEvent;
 import javafx.application.Application;
@@ -21,7 +22,7 @@ public class Main extends Application {
 			World world = new World(map, w);
 			world.addWorm(w1, map);
 			
-			setTheEventFilters(scene, map,world.currentWorm.worm, world);
+			setTheEventFilters(scene, map, world);
 			root.setCenter(world.getWorld());
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);
@@ -35,7 +36,7 @@ public class Main extends Application {
 		launch(args);
 	}
 
-	private void setTheEventFilters(Scene s, Map map, Worm w, World world) {
+	private void setTheEventFilters(Scene s, Map map, World world) {
 		if (s == null) {
 			System.out.println("The BorderPane must be initialized for the EventFilter to be set.");
 			return;

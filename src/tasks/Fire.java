@@ -2,8 +2,8 @@ package tasks;
 
 import application.Map;
 import application.Weapon;
+import application.Worm;
 import javafx.application.Platform;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.concurrent.Task;
 
@@ -16,21 +16,20 @@ public class Fire extends Task<Void>{
 	Weapon weapon;
 	SimpleDoubleProperty xFire;
 	SimpleDoubleProperty yFire;
-	SimpleBooleanProperty isFiring;
+	Worm worm;
 	
-	public Fire(double xi, double yi, double angle, double initSpeed, Map m, Weapon w, SimpleDoubleProperty xFireProperty, SimpleDoubleProperty yFireProperty, SimpleBooleanProperty firing) {
-		xInit = xi;
-		yInit = yi;
+	public Fire(double angle, double initSpeed, Worm w) {
+		worm = w;
+		map = worm.getMap();
+		weapon = worm.getWeapon();
+		xInit = (worm.xPosProperty().get() + 3)*5;
+		yInit = (worm.yPosProperty().get() + 3)*5;
 		hInitSpeed = initSpeed*Math.cos(angle);
 		vInitSpeed = initSpeed*Math.sin(angle);
-		map = m;
-		weapon = w;
 		xFire = new SimpleDoubleProperty();
 		yFire = new SimpleDoubleProperty();
-		isFiring = new SimpleBooleanProperty();
-		xFire.bindBidirectional(xFireProperty);
-		yFire.bindBidirectional(yFireProperty);
-		isFiring.bindBidirectional(firing);
+		xFire.bindBidirectional(worm.xFireProperty());
+		yFire.bindBidirectional(worm.yFireProperty());
 	}
 
 	@Override
@@ -93,8 +92,14 @@ public class Fire extends Task<Void>{
 			default:
 				break;
 		}
-		map.destroy((int)(yFire.get()/5), (int)(xFire.get()/5), weapon.getDamage());
-		isFiring.set(false);
+		Platform.runLater(new Runnable() {
+			
+			@Override
+			public void run() {
+				map.destroy((int)(yFire.get()/5), (int)(xFire.get()/5), weapon.getDamage());
+				Worm.isFiring.set(false);
+			}
+		});
 		return null;
 	}
 	

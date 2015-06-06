@@ -1,5 +1,8 @@
-package application;
+package views;
 
+import application.Map;
+import application.Weapon;
+import application.Worm;
 import javafx.animation.Interpolator;
 import javafx.animation.ParallelTransition;
 import javafx.animation.ScaleTransition;
@@ -28,6 +31,7 @@ public class World {
 		allWorms = new WormView[1];
 		allWorms[0] = new WormView(w, m);
 		currentWorm = allWorms[0];
+		currentWorm.getWorm().setCurrentWorm(true);
 		weaponChooser = new TilePane(4, 4);
 		initiateWeaponChooser();
 		world = new Group();
@@ -78,6 +82,7 @@ public class World {
 	}
 
 	public void nextWorm() {
+		currentWorm.getWorm().setCurrentWorm(false);
 		if (index < allWorms.length - 1) {
 			currentWorm = allWorms[index + 1];
 			index++;
@@ -85,14 +90,15 @@ public class World {
 			currentWorm = allWorms[0];
 			index = 0;
 		}
+		currentWorm.getWorm().setCurrentWorm(true);
 	}
 
 	private void damages(int dam, int rad) {
 		for (int i = 0; i < allWorms.length; i++) {
-			if (Math.pow(allWorms[i].getWorm().xPos.get() - currentWorm.getWorm().xFire.get(), 2) + Math.pow(allWorms[i].getWorm().yPos.get() - currentWorm.getWorm().yFire.get(), 2) < Math.pow(rad, 2)) {
-				allWorms[i].getWorm().life.subtract(dam);
+			if (Math.pow(allWorms[i].getWorm().xPosProperty().get() - currentWorm.getWorm().xFireProperty().get(), 2) + Math.pow(allWorms[i].getWorm().yPosProperty().get() - currentWorm.getWorm().yFireProperty().get(), 2) < Math.pow(rad, 2)) {
+				allWorms[i].getWorm().lifeProperty().subtract(dam);
 			}
-			if (allWorms[i].getWorm().life.get()<=0){
+			if (allWorms[i].getWorm().lifeProperty().get()<=0){
 				removeWorm(i);
 			}
 		

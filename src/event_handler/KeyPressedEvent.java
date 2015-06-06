@@ -1,7 +1,7 @@
 package event_handler;
 
+import views.World;
 import application.Map;
-import application.World;
 import application.Worm;
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyEvent;

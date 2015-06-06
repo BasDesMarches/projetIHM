@@ -6,15 +6,19 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
+import javafx.beans.property.SimpleBooleanProperty;
+
 public class Map {
 	char map[][];
 	String mapFile;
+	SimpleBooleanProperty hasChanged;
 	int xSize;
 	int ySize;
 
 	public Map(String s) {
 		mapFile = s;
 		loadMap();
+		hasChanged = new SimpleBooleanProperty(false);
 	}
 
 	private void loadMap() {
@@ -48,6 +52,7 @@ public class Map {
 				}
 			}
 		}
+		hasChanged.set(true);
 	}
 	
 	private boolean inBounds(int i, int j) {
@@ -61,6 +66,10 @@ public class Map {
 
 	public int getYSize() {
 		return ySize;
+	}
+
+	public SimpleBooleanProperty getHasChanged() {
+		return hasChanged;
 	}
 
 	public char[][] getMap() {
