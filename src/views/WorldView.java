@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import application.Map;
 import application.Team;
+import application.TurnManager;
 import application.Weapon;
 import javafx.animation.Interpolator;
 import javafx.animation.ParallelTransition;
@@ -14,6 +15,8 @@ import javafx.scene.Group;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.TilePane;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.util.Duration;
 
 public class WorldView {
@@ -24,22 +27,30 @@ public class WorldView {
 	ArrayList<TeamView> team;
 	TeamView currentTeam;
 	int currentWormIndex;
-	
+	int currentTeamIndex;
+	Text timer;
+	TurnManager turnManager;
+
 	ScaleTransition weaponChooserTransition1;
 	TranslateTransition weaponChooserTransition2;
 	ParallelTransition weaponChooserTransition;
 
+// ========== Construction of the instance ==========
 	public WorldView(Map m, ArrayList<Team> teams) {
 		map = new MapView(m);
 		weaponChooser = new TilePane(4, 4);
 		initiateWeaponChooser();
 		currentWormIndex = 0;
+		currentTeamIndex = 0;
+		timer = new Text(750,35,"");
+		timer.setFont(new Font(30));
+		turnManager = new TurnManager(30, this);
 		
 		team = new ArrayList<TeamView>(teams.size());
 		for (Team t : teams) {
 			team.add(new TeamView(t, m));
 		}
-		currentTeam = team.get(0);
+		currentTeam = team.get(currentTeamIndex);
 		currentWorm = currentTeam.getMembers().get(currentWormIndex);
 		currentWorm.getWorm().setCurrentWorm(true);
 		
@@ -51,6 +62,7 @@ public class WorldView {
 				world.getChildren().add(w.getWormGroup());
 			}
 		}
+		world.getChildren().add(timer);
 	}
 
 	private void initiateWeaponChooser() {
@@ -78,6 +90,7 @@ public class WorldView {
 		weaponChooserTransition = new ParallelTransition(weaponChooserTransition1, weaponChooserTransition2);
 	}
 
+// ========== Functions ==========
 	public void showWeaponChooser() {
 		weaponChooserTransition1.setToX(1);
 		weaponChooserTransition1.setToY(1);
@@ -118,6 +131,30 @@ public class WorldView {
 		}
 		currentWorm.getWorm().setCurrentWorm(true);
 	}
+	
+	public void changeTeam() {
+		boolean cont = true;
+		while (cont && currentTeamIndex < team.size() - 1) {
+			currentTeamIndex++;
+			currentTeam = team.get(currentTeamIndex);
+			// Stops the loops if the new team is valid
+			if (currentTeam.getTeam().numberOfAliveMembers() > 0) {
+				cont = false;
+			}
+		}
+		// Starts over from the begining if the end of the array was reached with no valid worm found
+		if (cont) {
+			currentTeamIndex = -1; // The last element of the array is also the -1th
+		}
+		while (cont && currentTeamIndex < team.size() - 1) {
+			currentTeamIndex++;
+			currentTeam = team.get(currentTeamIndex);
+			if (currentTeam.getTeam().numberOfAliveMembers() > 0) {
+				cont = false;
+			}
+		}
+		nextWorm();
+	}
 
 /*	private void damages(int dam, int rad) {
 		for (int i = 0; i < allWorms.length; i++) {
@@ -131,33 +168,7 @@ public class WorldView {
 		}
 	}*/
 
-/*	public void addWorm(Worm w, Map m) {
-		WormView newWorm = new WormView(w, m);
-		WormView[] a = new WormView[allWorms.length + 1];
-		for (int i = 0; i < allWorms.length; i++) {
-			a[i] = allWorms[i];
-		}
-		a[allWorms.length] = newWorm;
-		allWorms = a;
-		world.getChildren().add(allWorms[allWorms.length - 1].wormGroup);
-	}
-
-	private void removeWorm(int index) {
-		WormView[] a = new WormView[allWorms.length - 1];
-		for (int i = 0; i < index; i++) {
-			a[i] = allWorms[i];
-		}
-		for (int i = index + 1; i < allWorms.length; i++) {
-			a[i - 1] = allWorms[i];
-		}
-		allWorms = a;
-	}*/
-	
-	private void turn(){
-		
-	}
-
-	// ========== Getters and setters ==========
+// ========== Getters and setters ==========
 	public Group getWorld() {
 		return world;
 	}
@@ -168,5 +179,9 @@ public class WorldView {
 
 	public WormView getCurrentWorm() {
 		return currentWorm;
+	}
+	
+	public Text getTimer() {
+		return timer;
 	}
 }
