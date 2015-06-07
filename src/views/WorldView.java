@@ -44,6 +44,7 @@ public class WorldView {
 		currentTeamIndex = 0;
 		timer = new Text(750,35,"");
 		timer.setFont(new Font(30));
+//		timer.setVisible(false);
 		turnManager = new TurnManager(30, this);
 		
 		team = new ArrayList<TeamView>(teams.size());

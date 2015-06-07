@@ -9,11 +9,11 @@ public class Team {
 	Color color;
 	ArrayList<Worm> members;
 	
-	public Team(String name, Color color, int number) {
+	public Team(String name, Color color) {
 		super();
 		this.name = name;
 		this.color = color;
-		members = new ArrayList<Worm>(number);
+		members = new ArrayList<Worm>();
 	}
 
 	public void addMember(Worm member) {
