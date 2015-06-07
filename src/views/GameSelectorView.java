@@ -39,6 +39,8 @@ public class GameSelectorView {
 		HBox thumbnails = new HBox(10);
 		ToggleSet ts = new ToggleSet("hill1", tg);
 		thumbnails.getChildren().add(ts.getSet());
+		ts = new ToggleSet("test", tg);
+		thumbnails.getChildren().add(ts.getSet());
 		return thumbnails;
 	}
 	

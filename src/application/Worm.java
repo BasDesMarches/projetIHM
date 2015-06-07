@@ -1,6 +1,7 @@
 package application;
 
 import tasks.Fire;
+import javafx.beans.binding.When;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -18,6 +19,7 @@ public class Worm {
 	SimpleDoubleProperty xFire;
 	SimpleDoubleProperty yFire;
 	public static SimpleBooleanProperty isFiring = new SimpleBooleanProperty(false);
+	SimpleBooleanProperty bulletInBounds;
 	//int paceCounter;
 	//new Team team;
 	
@@ -33,7 +35,8 @@ public class Worm {
 		life = new SimpleIntegerProperty(100);
 		xFire = new SimpleDoubleProperty(x);
 		yFire = new SimpleDoubleProperty(y);
-		
+		bulletInBounds = new SimpleBooleanProperty();
+		bulletInBounds.bind(new When(xFire.greaterThan(15).and(yFire.greaterThan(15))).then(true).otherwise(false));
 	}
 	
 
@@ -165,5 +168,9 @@ public class Worm {
 
 	public void setIsChoosingWeapon(boolean b) {
 		choosingWeapon = b;
+	}
+	
+	public SimpleBooleanProperty isBulletInBounds() {
+		return bulletInBounds;
 	}
 }

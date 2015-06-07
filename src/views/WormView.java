@@ -62,7 +62,7 @@ public class WormView {
 		bullet.setViewport(new Rectangle2D(15, 15, 30, 30));
 		bullet.layoutXProperty().bind(worm.xFireProperty().subtract(15));
 		bullet.layoutYProperty().bind(worm.yFireProperty().subtract(15));
-		bullet.visibleProperty().bind(Worm.isFiring.and(worm.isCurrentWorm()));
+		bullet.visibleProperty().bind(Worm.isFiring.and(worm.isCurrentWorm()).and(worm.isBulletInBounds()));
 		wormGroup.getChildren().addAll(wormIm,hitbox,fireBox, bullet, lifeBg, lifeValue);
 //		wormGroup.setVisible(false);
 		
