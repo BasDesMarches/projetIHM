@@ -10,6 +10,7 @@ import javafx.animation.Interpolator;
 import javafx.animation.ParallelTransition;
 import javafx.animation.ScaleTransition;
 import javafx.animation.TranslateTransition;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.image.ImageView;
@@ -17,6 +18,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.TilePane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
 
 public class WorldView {
@@ -30,6 +32,8 @@ public class WorldView {
 	int currentTeamIndex;
 	Text timer;
 	TurnManager turnManager;
+	
+	SimpleBooleanProperty gameFinished;
 
 	ScaleTransition weaponChooserTransition1;
 	TranslateTransition weaponChooserTransition2;
@@ -42,6 +46,7 @@ public class WorldView {
 		initiateWeaponChooser();
 		currentWormIndex = 0;
 		currentTeamIndex = 0;
+		gameFinished = new SimpleBooleanProperty(false);
 		timer = new Text(750,35,"");					// The timer and turn manager
 		timer.setFont(new Font(30));
 //		timer.setVisible(false);
@@ -166,6 +171,7 @@ public class WorldView {
 		}
 		if (i <= 1) {
 			world.getChildren().clear();
+			isGameFinished().set(true);
 			Text text = new Text();
 			if (t == null) {
 				text.setText("It's a draw!");
@@ -173,7 +179,8 @@ public class WorldView {
 				text.setText("The " + t.getName() + " team wins!");
 			}
 			text.setFont(Font.font(40));
-			text.setWrappingWidth(400);
+			text.setTextAlignment(TextAlignment.CENTER);
+			text.setWrappingWidth(800);
 			text.setLayoutX(200);
 			text.setLayoutY(250);
 			world.getChildren().add(text);
@@ -207,5 +214,13 @@ public class WorldView {
 	
 	public Text getTimer() {
 		return timer;
+	}
+	
+	public SimpleBooleanProperty isGameFinished() {
+		return gameFinished;
+	}
+	
+	public void setGameFinished(boolean b) {
+		gameFinished.set(b);
 	}
 }
