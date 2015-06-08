@@ -37,25 +37,23 @@ public class WorldView {
 
 // ========== Construction of the instance ==========
 	public WorldView(Map m, ArrayList<Team> teams) {
-		map = new MapView(m);
+		map = new MapView(m);							// Initializations
 		weaponChooser = new TilePane(4, 4);
 		initiateWeaponChooser();
 		currentWormIndex = 0;
 		currentTeamIndex = 0;
-		timer = new Text(750,35,"");
+		timer = new Text(750,35,"");					// The timer and turn manager
 		timer.setFont(new Font(30));
 //		timer.setVisible(false);
 		turnManager = new TurnManager(30, this);
-		
-		team = new ArrayList<TeamView>(teams.size());
+		team = new ArrayList<TeamView>(teams.size());	// Teams and worms
 		for (Team t : teams) {
 			team.add(new TeamView(t, m));
 		}
 		currentTeam = team.get(currentTeamIndex);
 		currentWorm = currentTeam.getMembers().get(currentWormIndex);
 		currentWorm.getWorm().setCurrentWorm(true);
-		
-		world = new Group();
+		world = new Group();							// The returned Group
 		world.getChildren().add(map.getView());
 		world.getChildren().add(weaponChooser);
 		for (TeamView t : team) {
@@ -155,6 +153,31 @@ public class WorldView {
 			}
 		}
 		nextWorm();
+	}
+	
+	public void checkForVictory() {
+		int i = 0;
+		Team t = null;
+		for (TeamView tv : team) {
+			if (tv.getTeam().numberOfAliveMembers() > 0) {
+				i++;
+				t = tv.getTeam();
+			}
+		}
+		if (i <= 1) {
+			world.getChildren().clear();
+			Text text = new Text();
+			if (t == null) {
+				text.setText("It's a draw!");
+			} else {
+				text.setText("The " + t.getName() + " team wins!");
+			}
+			text.setFont(Font.font(40));
+			text.setWrappingWidth(400);
+			text.setLayoutX(200);
+			text.setLayoutY(250);
+			world.getChildren().add(text);
+		}
 	}
 
 /*	private void damages(int dam, int rad) {
