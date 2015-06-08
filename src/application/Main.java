@@ -5,6 +5,8 @@ import views.WorldView;
 import event_handler.KeyPressedEvent;
 import event_handler.MouseReleasedEvent;
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.stage.Stage;
@@ -34,7 +36,7 @@ public class Main extends Application {
 					gsv.generate();
 					WorldView world = new WorldView(gsv.getMap(), gsv.getTeams());
 					arena.setCenter(world.getWorld());
-					setTheEventFilters(arenaScene, gsv.getMap(), world);
+					setTheEvent(arenaScene, gsv.getMap(), world, primaryStage, menuScene);
 					arenaScene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 					primaryStage.setScene(arenaScene);
 				}
@@ -54,12 +56,17 @@ public class Main extends Application {
 		launch(args);
 	}
 
-	private void setTheEventFilters(Scene s, Map map, WorldView world) {
-		if (s == null) {
-			System.out.println("The BorderPane must be initialized for the EventFilter to be set.");
-			return;
-		}
-		s.setOnKeyPressed(new KeyPressedEvent(world));
-		s.setOnMouseReleased(new MouseReleasedEvent(world));
+	private void setTheEvent(Scene arena, Map map, WorldView world, Stage stage, Scene menu) {
+		world.isGameFinished().addListener(new ChangeListener<Boolean>() {
+			@Override
+			public void changed(ObservableValue<? extends Boolean> observable,
+					Boolean oldValue, Boolean newValue) {
+				if (oldValue) {
+					stage.setScene(menu);
+				}
+			}
+		});
+		arena.setOnKeyPressed(new KeyPressedEvent(world));
+		arena.setOnMouseReleased(new MouseReleasedEvent(world));
 	}
 }

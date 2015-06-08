@@ -10,6 +10,7 @@ import javafx.animation.Interpolator;
 import javafx.animation.ParallelTransition;
 import javafx.animation.ScaleTransition;
 import javafx.animation.TranslateTransition;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.image.ImageView;
@@ -17,6 +18,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.TilePane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
 
 public class WorldView {
@@ -30,6 +32,8 @@ public class WorldView {
 	int currentTeamIndex;
 	Text timer;
 	TurnManager turnManager;
+	
+	SimpleBooleanProperty gameFinished;
 
 	ScaleTransition weaponChooserTransition1;
 	TranslateTransition weaponChooserTransition2;
@@ -37,25 +41,24 @@ public class WorldView {
 
 // ========== Construction of the instance ==========
 	public WorldView(Map m, ArrayList<Team> teams) {
-		map = new MapView(m);
+		map = new MapView(m);							// Initializations
 		weaponChooser = new TilePane(4, 4);
 		initiateWeaponChooser();
 		currentWormIndex = 0;
 		currentTeamIndex = 0;
-		timer = new Text(750,35,"");
+		gameFinished = new SimpleBooleanProperty(false);
+		timer = new Text(750,35,"");					// The timer and turn manager
 		timer.setFont(new Font(30));
 //		timer.setVisible(false);
 		turnManager = new TurnManager(30, this);
-		
-		team = new ArrayList<TeamView>(teams.size());
+		team = new ArrayList<TeamView>(teams.size());	// Teams and worms
 		for (Team t : teams) {
 			team.add(new TeamView(t, m));
 		}
 		currentTeam = team.get(currentTeamIndex);
 		currentWorm = currentTeam.getMembers().get(currentWormIndex);
 		currentWorm.getWorm().setCurrentWorm(true);
-		
-		world = new Group();
+		world = new Group();							// The returned Group
 		world.getChildren().add(map.getView());
 		world.getChildren().add(weaponChooser);
 		for (TeamView t : team) {
@@ -156,6 +159,33 @@ public class WorldView {
 		}
 		nextWorm();
 	}
+	
+	public void checkForVictory() {
+		int i = 0;
+		Team t = null;
+		for (TeamView tv : team) {
+			if (tv.getTeam().numberOfAliveMembers() > 0) {
+				i++;
+				t = tv.getTeam();
+			}
+		}
+		if (i <= 1) {
+			world.getChildren().clear();
+			isGameFinished().set(true);
+			Text text = new Text();
+			if (t == null) {
+				text.setText("It's a draw!");
+			} else {
+				text.setText("The " + t.getName() + " team wins!");
+			}
+			text.setFont(Font.font(40));
+			text.setTextAlignment(TextAlignment.CENTER);
+			text.setWrappingWidth(800);
+			text.setLayoutX(200);
+			text.setLayoutY(250);
+			world.getChildren().add(text);
+		}
+	}
 
 /*	private void damages(int dam, int rad) {
 		for (int i = 0; i < allWorms.length; i++) {
@@ -185,7 +215,16 @@ public class WorldView {
 	public Text getTimer() {
 		return timer;
 	}
+		
+	public SimpleBooleanProperty isGameFinished() {
+		return gameFinished;
+	}
 	
+	public void setGameFinished(boolean b) {
+		gameFinished.set(b);
+	}
+	
+
 	public ArrayList<TeamView> getTeamView(){
 		return team;
 	}
@@ -205,5 +244,5 @@ public class WorldView {
 	public void setCurrentTeamIndex(int currentTeamIndex) {
 		this.currentTeamIndex = currentTeamIndex;
 	}
-	
+
 }

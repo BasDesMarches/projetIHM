@@ -32,6 +32,7 @@ public class TurnManager {
 			public void changed(ObservableValue<? extends Boolean> observable,
 					Boolean oldValue, Boolean newValue) {
 				if (newValue) {
+					world.checkForVictory();
 					world.changeTeam();
 					time.set(turnPeriod + 1);
 				}

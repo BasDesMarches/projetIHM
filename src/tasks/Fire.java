@@ -77,8 +77,15 @@ public class Fire extends Task<Void>{
 					yf = yInit + vInitSpeed*j;
 					j++;
 				}
-				xFire.set(xf);
-				yFire.set(yf);
+				final double tempxf = xf;
+				final double tempyf = yf;
+				Platform.runLater(new Runnable() {
+					@Override
+					public void run() {
+						xFire.set(tempxf);
+						yFire.set(tempyf);
+					}
+				});
 				break;
 	
 			default:

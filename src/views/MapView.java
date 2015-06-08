@@ -4,19 +4,26 @@ import application.Map;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.Node;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
-//import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
+/**
+ * Class that generates a GridPane representing the <b>Map</b> given to the constructor.
+ * @author Bastien
+ */
 public class MapView {
 	int squareSize;
 	Map m;
-	ImageView bg;
-	ImageView fg;
 	GridPane map;
 	
+	/**
+	 * Generates the elements of the GridPane according to the <b>Map</b> <code>m</code>.
+	 * The size of each element (5 <i>px</i>) is set in here.
+	 * 
+	 * The <b>Listener</b> that redraws the map is also set in here.
+	 * @param m
+	 */
 	public MapView(Map m) {
 		squareSize = 5;
 		this.m = m;
@@ -44,6 +51,9 @@ public class MapView {
 		});
 	}
 	
+	/**
+	 * Refresh the elements of the GridPane.
+	 */
 	public void redrawMap() {
 		char cases[][] = m.getMap();
 		for(Node node : map.getChildren()){
@@ -53,6 +63,7 @@ public class MapView {
 		}
 	}
 	
+	// ========== Getters and setters ==========
 	public GridPane getView() {
 		return map;
 	}

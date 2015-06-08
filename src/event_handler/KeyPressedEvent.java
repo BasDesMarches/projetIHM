@@ -18,24 +18,28 @@ public class KeyPressedEvent implements EventHandler<KeyEvent>{
 
 	@Override
 	public void handle(KeyEvent event) {
-		Worm w = wo.getCurrentWorm().getWorm();
-		switch (event.getCode()) {
-		case D:
-		case RIGHT:
-			w.moveRight();
-			break;
-			
-		case Q:
-		case LEFT:
-			w.moveLeft();
-			break;
+		if (wo.isGameFinished().get()) {
+			wo.setGameFinished(false);
+		} else {
+			Worm w = wo.getCurrentWorm().getWorm();
+			switch (event.getCode()) {
+			case D:
+			case RIGHT:
+				w.moveRight();
+				break;
+				
+			case Q:
+			case LEFT:
+				w.moveLeft();
+				break;
 
-		case ENTER:
-			wo.nextWorm();
-			break;
-		default:
-			break;
+			case ENTER:
+				wo.nextWorm();
+				break;
+			default:
+				break;
+			}
+			event.consume();
 		}
-		event.consume();
 	}
 }
