@@ -1,5 +1,6 @@
 package tasks;
 
+import views.WorldView;
 import application.Map;
 import application.Weapon;
 import application.Worm;
@@ -16,9 +17,11 @@ public class Fire extends Task<Void>{
 	Weapon weapon;
 	SimpleDoubleProperty xFire;
 	SimpleDoubleProperty yFire;
+	WorldView wV;
 	Worm worm;
 	
-	public Fire(double angle, double initSpeed, Worm w) {
+	public Fire(double angle, double initSpeed/*,WorldView wV*/,Worm w) {
+		//Worm worm = wV.getTeamView().get(wV.getCurrentTeamIndex()).getMembers().get(wV.getCurrentWormIndex()).getWorm();
 		worm = w;
 		map = worm.getMap();
 		weapon = worm.getWeapon();
@@ -53,7 +56,7 @@ public class Fire extends Task<Void>{
 						});
 						Thread.sleep(10);
 						i++;
-						if ((inBounds((int)(yFire.get()/5), (int)(xFire.get()/5)) && grid[(int)(yFire.get()/5)][(int)(xFire.get()/5)] == '1') || yFire.get()/5 > map.getYSize() + 20) {
+						if ((inBounds((int)(yFire.get()/5), (int)(xFire.get()/5)) && grid[(int)(yFire.get()/5)][(int)(xFire.get()/5)] == '1') || yFire.get()/5 > map.getYSize() + 20||wormHit()) {
 							hasHit = true;
 						}
 					}
@@ -94,5 +97,19 @@ public class Fire extends Task<Void>{
 	
 	private boolean inBounds(int y, int x) {
 		return (0 <= y && y < map.getYSize() && 0 <= x && x < map.getXSize());
+	}
+	
+	private boolean wormHit(){
+		boolean a= false;
+		for (int i = 0;i < wV.getTeamView().size(); i++ ){
+			for (int j = 0;j < wV.getTeamView().get(i).getMembers().size();i++){
+				if (i!=wV.getCurrentTeamIndex()&&j!=wV.getCurrentWormIndex()){
+					if (wV.getTeamView().get(i).getMembers().get(j).getHitbox().intersects(wV.getCurrentWorm().getFireBox().getLayoutBounds())){
+						a=true;
+					}
+				}
+			}
+		}
+		return a;
 	}
 }

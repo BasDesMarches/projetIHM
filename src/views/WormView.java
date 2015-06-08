@@ -87,4 +87,21 @@ public class WormView {
 	public SimpleIntegerProperty yProperty() {
 		return yPos;
 	}
+
+	public Rectangle getHitbox() {
+		return hitbox;
+	}
+
+	public void setHitbox(Rectangle hitbox) {
+		this.hitbox = hitbox;
+	}
+
+	public Rectangle getFireBox() {
+		return fireBox;
+	}
+
+	public void setFireBox(Rectangle fireBox) {
+		this.fireBox = fireBox;
+	}
+	
 }

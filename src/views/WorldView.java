@@ -185,4 +185,25 @@ public class WorldView {
 	public Text getTimer() {
 		return timer;
 	}
+	
+	public ArrayList<TeamView> getTeamView(){
+		return team;
+	}
+
+	public int getCurrentWormIndex() {
+		return currentWormIndex;
+	}
+
+	public void setCurrentWormIndex(int currentWormIndex) {
+		this.currentWormIndex = currentWormIndex;
+	}
+
+	public int getCurrentTeamIndex() {
+		return currentTeamIndex;
+	}
+
+	public void setCurrentTeamIndex(int currentTeamIndex) {
+		this.currentTeamIndex = currentTeamIndex;
+	}
+	
 }

@@ -68,6 +68,15 @@ public class Worm {
 //		paceCounter--;
 	}
 	
+	public void yPosAdjust(){
+		int i= yPos.get();
+		int j= xPos.get();
+		while((i + 5 < 120) && map.getMap()[i + 5][j + 2]==('0')){
+			i++;
+		}
+		
+	}
+	
 	public void moveRight() {
 		onRight.set(true);
 		elementalMove();
@@ -85,7 +94,7 @@ public class Worm {
 		isFiring.set(true);
 		xFire.set((xPos.get() + 3)*5);
 		yFire.set((yPos.get() + 3)*5);
-		Fire f = new Fire(angle, initSpeed, this);
+		Fire f = new Fire(angle, initSpeed,this);
 		Thread th = new Thread(f);
 		th.start();
 	}
