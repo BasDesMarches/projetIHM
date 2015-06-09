@@ -2,28 +2,64 @@
 #timer, #menuLabel {
     -fx-font-family: Helvetica,Calibri,sans-serif;
     -fx-font-size: 40;
-    -fx-fill: red;
+    -fx-fill: #dd1111;
+    -fx-text-fill: #dd1111;
     -fx-font-weight: bold;
+    -fx-alignment: center;
+}
+
+#menuLabel {
+    -fx-background-color: #222222;
+}
+
+Button {
+    -fx-background-color: #dd1111;
+    -fx-text-fill: #dddddd
 }
 
 Label {
     -fx-font-family: Helvetica,Calibri,sans-serif;
     -fx-font-size: 15;
     -fx-font-weight: bold;
+    -fx-text-fill: #dddddd;
 }
 
 #tgLabel {
     -fx-font-family: Helvetica,Calibri,sans-serif;
     -fx-font-size: 15;
-    -fx-text-alignment: center
+    -fx-text-alignment: center;
+    -fx-font-weight: bold;
 }
 
 #sideBar {
     -fx-border-width: 3px;
-    -fx-border-color: black;
+    -fx-background-color: #222222;
 }
 
 #selector {
-    -fx-border-width: 3px;
-    -fx-border-color: #666666
+    -fx-border-width: 5px;
+    -fx-border-color: #222222;
+    -fx-background-color: #444444;
 }
+
+ChoiceBox {
+    -fx-background-color: #dd1111, #222222;
+    -fx-border-color: #dd1111;
+    -fx-border-width: 2px;
+    -fx-border-radius: 0px;
+    -fx-pref-height: 25px;
+    -fx-pref-width: 40px;
+}
+
+.context-menu {
+    -fx-background-color: #222222;
+}
+
+.menu-item .label {
+    -fx-text-fill: #dddddd;
+}
+
+.menu-item:focused {
+    -fx-background-color: #dd1111;
+}
+

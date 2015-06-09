@@ -6,6 +6,7 @@ import application.Map;
 import application.Team;
 import application.TurnManager;
 import application.Weapon;
+import application.Worm;
 import javafx.animation.Interpolator;
 import javafx.animation.ParallelTransition;
 import javafx.animation.ScaleTransition;

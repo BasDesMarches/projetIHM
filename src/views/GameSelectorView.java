@@ -39,7 +39,7 @@ public class GameSelectorView {
 	}
 	
 	private HBox loadThumbnails() {
-		HBox thumbnails = new HBox(10);
+		HBox thumbnails = new HBox(15);
 		ToggleSet ts = new ToggleSet("hill1", tg);
 		ts.setSelected(true);
 		thumbnails.getChildren().add(ts.getSet());
@@ -53,7 +53,7 @@ public class GameSelectorView {
 		for (int i = start; i <= end; i++) {
 			box.getItems().add(i);
 		}
-		box.setValue(start);;
+		box.setValue(start);
 		return box;
 	}
 
