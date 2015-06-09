@@ -1,6 +1,5 @@
 package application;
 
-import tasks.Fire;
 import javafx.beans.binding.When;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -87,6 +86,7 @@ public class Worm {
 		elementalMove();
 	}
 	
+	/*
 	public void fire(double angle, double initSpeed) {
 		if (isFiring.get()) {
 			return;
@@ -98,6 +98,7 @@ public class Worm {
 		Thread th = new Thread(f);
 		th.start();
 	}
+	*/
 	
 	public void  wound(int i){
 		life.set(life.get()-i);

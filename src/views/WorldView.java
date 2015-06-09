@@ -2,6 +2,7 @@ package views;
 
 import java.util.ArrayList;
 
+import tasks.Fire;
 import application.Map;
 import application.Team;
 import application.TurnManager;
@@ -194,18 +195,18 @@ public class WorldView {
 			world.getChildren().add(text);
 		}
 	}
-
-/*	private void damages(int dam, int rad) {
-		for (int i = 0; i < allWorms.length; i++) {
-			if (Math.pow(allWorms[i].getWorm().xPosProperty().get() - currentWorm.getWorm().xFireProperty().get(), 2) + Math.pow(allWorms[i].getWorm().yPosProperty().get() - currentWorm.getWorm().yFireProperty().get(), 2) < Math.pow(rad, 2)) {
-				allWorms[i].getWorm().lifeProperty().subtract(dam);
-			}
-			if (allWorms[i].getWorm().lifeProperty().get()<=0){
-				removeWorm(i);
-			}
-		
+	
+	public void fire(double angle, double initSpeed) {
+		if (currentWorm.getWorm().isFiring.get()) {
+			return;
 		}
-	}*/
+		currentWorm.getWorm().isFiring.set(true);
+		currentWorm.getWorm().xFireProperty().set((currentWorm.getWorm().xPosProperty().get() + 3)*5);
+		currentWorm.getWorm().yFireProperty().set((currentWorm.getWorm().yPosProperty().get() + 3)*5);
+		Fire f = new Fire(angle, initSpeed, this);
+		Thread th = new Thread(f);
+		th.start();
+	}
 
 // ========== Getters and setters ==========
 	public Group getWorld() {

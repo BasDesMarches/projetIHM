@@ -18,11 +18,12 @@ public class Fire extends Task<Void>{
 	SimpleDoubleProperty xFire;
 	SimpleDoubleProperty yFire;
 	WorldView wV;
-	Worm worm;
+	//Worm worm;
 	
-	public Fire(double angle, double initSpeed/*,WorldView wV*/,Worm w) {
-		//Worm worm = wV.getTeamView().get(wV.getCurrentTeamIndex()).getMembers().get(wV.getCurrentWormIndex()).getWorm();
-		worm = w;
+	public Fire(double angle, double initSpeed, WorldView ww) {
+		wV = ww; 
+		Worm worm = wV.getTeamView().get(wV.getCurrentTeamIndex()).getMembers().get(wV.getCurrentWormIndex()).getWorm();
+		//worm = w;
 		map = worm.getMap();
 		weapon = worm.getWeapon();
 		xInit = (worm.xPosProperty().get() + 3)*5;
@@ -119,4 +120,17 @@ public class Fire extends Task<Void>{
 		}
 		return a;
 	}
+	
+	/*
+	private void damages(int dam, int rad) {
+		for (int i = 0; i < allWorms.length; i++) {
+			if (Math.pow(allWorms[i].getWorm().xPosProperty().get() - currentWorm.getWorm().xFireProperty().get(), 2) + Math.pow(allWorms[i].getWorm().yPosProperty().get() - currentWorm.getWorm().yFireProperty().get(), 2) < Math.pow(rad, 2)) {
+				allWorms[i].getWorm().lifeProperty().subtract(dam);
+			}
+			if (allWorms[i].getWorm().lifeProperty().get()<=0){
+				removeWorm(i);
+			}
+		
+		}
+		*/
 }

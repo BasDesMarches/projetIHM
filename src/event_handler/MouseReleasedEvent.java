@@ -24,7 +24,7 @@ public class MouseReleasedEvent implements EventHandler<MouseEvent>{
 				if(w.isChoosingWeapon()){
 					world.hideWeaponChooser();
 				} else {
-					w.fire(Math.atan2(event.getSceneY() - (w.yPosProperty().get()+3)*5, event.getSceneX() - (w.xPosProperty().get()+3)*5), 5);
+					world.fire(Math.atan2(event.getSceneY() - (w.yPosProperty().get()+3)*5, event.getSceneX() - (w.xPosProperty().get()+3)*5), 5);
 					world.getMap().redrawMap();
 				}
 				break;
