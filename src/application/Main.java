@@ -90,14 +90,14 @@ public class Main extends Application {
 		menuLabel.setId("menuLabel");
 		AnchorPane.setTopAnchor(menuLabel, 10.0);
 		AnchorPane.setLeftAnchor(menuLabel, 10.0);
-		AnchorPane.setRightAnchor(menuLabel, 10.0);
+		AnchorPane.setRightAnchor(menuLabel, 5.0);
 		AnchorPane.setBottomAnchor(quit, 10.0);
 		AnchorPane.setLeftAnchor(quit, 10.0);
-		AnchorPane.setRightAnchor(quit, 10.0);
+		AnchorPane.setRightAnchor(quit, 5.0);
 		quit.setPrefHeight(30);
 		AnchorPane.setBottomAnchor(start, 50.0);
 		AnchorPane.setLeftAnchor(start, 10.0);
-		AnchorPane.setRightAnchor(start, 10.0);
+		AnchorPane.setRightAnchor(start, 5.0);
 		start.setPrefHeight(30);
 	}
 }

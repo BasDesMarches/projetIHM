@@ -7,6 +7,7 @@ import application.Map;
 import application.Team;
 import application.TurnManager;
 import application.Weapon;
+import application.Worm;
 import javafx.animation.Interpolator;
 import javafx.animation.ParallelTransition;
 import javafx.animation.ScaleTransition;
@@ -197,10 +198,10 @@ public class WorldView {
 	}
 	
 	public void fire(double angle, double initSpeed) {
-		if (currentWorm.getWorm().isFiring.get()) {
+		if (Worm.isFiring.get()) {
 			return;
 		}
-		currentWorm.getWorm().isFiring.set(true);
+		Worm.isFiring.set(true);
 		currentWorm.getWorm().xFireProperty().set((currentWorm.getWorm().xPosProperty().get() + 3)*5);
 		currentWorm.getWorm().yFireProperty().set((currentWorm.getWorm().yPosProperty().get() + 3)*5);
 		Fire f = new Fire(angle, initSpeed, this);
