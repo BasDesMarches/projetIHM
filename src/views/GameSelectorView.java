@@ -2,6 +2,7 @@ package views;
 
 import java.util.ArrayList;
 
+import javafx.geometry.Insets;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToggleGroup;
@@ -31,13 +32,16 @@ public class GameSelectorView {
 		mapSelector = new VBox(10, new Label("Choose the map :"), loadThumbnails());
 		numberOfTeamsSelector = new HBox(10, new Label("Number of teams : "), newNumberChoiceBox(2, 4));
 		numberOfWormsSelector = new HBox(10, new Label("Number of worms in a team : "), newNumberChoiceBox(1, 10));
-		selectorDisplay = new VBox();
+		selectorDisplay = new VBox(10);
 		selectorDisplay.getChildren().addAll(mapSelector, numberOfTeamsSelector, numberOfWormsSelector);
+		selectorDisplay.setPadding(new Insets(10));
+		selectorDisplay.setId("selector");
 	}
 	
 	private HBox loadThumbnails() {
 		HBox thumbnails = new HBox(10);
 		ToggleSet ts = new ToggleSet("hill1", tg);
+		ts.setSelected(true);
 		thumbnails.getChildren().add(ts.getSet());
 		ts = new ToggleSet("test", tg);
 		thumbnails.getChildren().add(ts.getSet());

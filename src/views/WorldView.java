@@ -13,9 +13,12 @@ import javafx.animation.TranslateTransition;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
+import javafx.scene.effect.Light;
+import javafx.scene.effect.Lighting;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.TilePane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
@@ -33,6 +36,7 @@ public class WorldView {
 	Text timer;
 	TurnManager turnManager;
 	
+	int numberOfRemainingTeams;
 	SimpleBooleanProperty gameFinished;
 
 	ScaleTransition weaponChooserTransition1;
@@ -46,9 +50,12 @@ public class WorldView {
 		initiateWeaponChooser();
 		currentWormIndex = 0;
 		currentTeamIndex = 0;
+		numberOfRemainingTeams = teams.size();
 		gameFinished = new SimpleBooleanProperty(false);
-		timer = new Text(750,35,"");					// The timer and turn manager
-		timer.setFont(new Font(30));
+		timer = new Text(740,40,"");					// The timer and turn manager
+		timer.setId("timer");
+		Light.Distant light = new Light.Distant(-120.0, 60, Color.YELLOW);
+		timer.setEffect(new Lighting(light));
 //		timer.setVisible(false);
 		turnManager = new TurnManager(30, this);
 		team = new ArrayList<TeamView>(teams.size());	// Teams and worms
@@ -161,15 +168,16 @@ public class WorldView {
 	}
 	
 	public void checkForVictory() {
-		int i = 0;
 		Team t = null;
 		for (TeamView tv : team) {
 			if (tv.getTeam().numberOfAliveMembers() > 0) {
-				i++;
 				t = tv.getTeam();
+			} else if (tv.getTeam().getRank() == 0) {
+				tv.getTeam().setRank(numberOfRemainingTeams);
+				numberOfRemainingTeams--;
 			}
 		}
-		if (i <= 1) {
+		if (numberOfRemainingTeams <= 1) {
 			world.getChildren().clear();
 			isGameFinished().set(true);
 			Text text = new Text();

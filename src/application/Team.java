@@ -8,9 +8,11 @@ public class Team {
 	String name;
 	Color color;
 	ArrayList<Worm> members;
+	int rank;
 	
 	public Team(String name, Color color) {
 		super();
+		rank = 0;
 		this.name = name;
 		this.color = color;
 		members = new ArrayList<Worm>();
@@ -53,5 +55,13 @@ public class Team {
 
 	public ArrayList<Worm> getMembers() {
 		return members;
+	}
+
+	public int getRank() {
+		return rank;
+	}
+
+	public void setRank(int rank) {
+		this.rank = rank;
 	}
 }
