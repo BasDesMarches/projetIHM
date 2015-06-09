@@ -1,5 +1,8 @@
 package application;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javafx.beans.binding.When;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -19,6 +22,7 @@ public class Worm {
 	SimpleDoubleProperty yFire;
 	public static SimpleBooleanProperty isFiring = new SimpleBooleanProperty(false);
 	SimpleBooleanProperty bulletInBounds;
+	static List<Worm> allWorms= new ArrayList<Worm>();
 	//int paceCounter;
 	//new Team team;
 	
@@ -36,6 +40,7 @@ public class Worm {
 		yFire = new SimpleDoubleProperty(y);
 		bulletInBounds = new SimpleBooleanProperty();
 		bulletInBounds.bind(new When(xFire.greaterThan(15).and(yFire.greaterThan(15))).then(true).otherwise(false));
+		//allWorms.add(this);
 	}
 	
 

@@ -57,7 +57,7 @@ public class Fire extends Task<Void>{
 						});
 						Thread.sleep(10);
 						i++;
-						if ((inBounds((int)(yFire.get()/5), (int)(xFire.get()/5)) && grid[(int)(yFire.get()/5)][(int)(xFire.get()/5)] == '1') || yFire.get()/5 > map.getYSize() + 20||wormHit()) {
+						if ((inBounds((int)(yFire.get()/5), (int)(xFire.get()/5)) && grid[(int)(yFire.get()/5)][(int)(xFire.get()/5)] == '1') || yFire.get()/5 > map.getYSize() + 20/*||wormHit()*/) {
 							hasHit = true;
 						}
 					}
@@ -71,7 +71,7 @@ public class Fire extends Task<Void>{
 				double yf = yInit;
 				int j = 0;
 				while (!hasHit && inBounds((int)(yf/5), (int)(xf/5))) {
-					if (grid[(int)(yf/5)][(int)(xf/5)] == '1') {
+					if (grid[(int)(yf/5)][(int)(xf/5)] == '1'|| wormHit()) {
 						hasHit = true;
 					}
 					xf = xInit + hInitSpeed*j;
@@ -96,7 +96,12 @@ public class Fire extends Task<Void>{
 			
 			@Override
 			public void run() {
-				map.destroy((int)(yFire.get()/5), (int)(xFire.get()/5), weapon.getDamage());
+				map.destroy((int)(yFire.get()/5), (int)(xFire.get()/5), weapon.getDamage()); 
+				for (int i = 0;i < wV.getTeamView().size(); i++ ){
+					for (int j = 0;j < wV.getTeamView().get(i).getMembers().size();i++){
+						findWorm(i,j).yPosAdjust();
+					}
+				}	
 				Worm.isFiring.set(false);
 			}
 		});
@@ -108,7 +113,7 @@ public class Fire extends Task<Void>{
 	}
 	
 	private boolean wormHit(){
-		boolean a= false;
+		boolean a = false;
 		for (int i = 0;i < wV.getTeamView().size(); i++ ){
 			for (int j = 0;j < wV.getTeamView().get(i).getMembers().size();i++){
 				if (i!=wV.getCurrentTeamIndex()&&j!=wV.getCurrentWormIndex()){
@@ -132,5 +137,10 @@ public class Fire extends Task<Void>{
 			}
 		
 		}
-		*/
-}
+	}
+	*/
+	
+	private Worm findWorm(int i, int j){
+		return wV.getTeamView().get(i).getMembers().get(j).getWorm();
+	}
+	}
