@@ -13,6 +13,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 public class WormView {
@@ -56,6 +57,7 @@ public class WormView {
 		name.setText(worm.getName());
 		name.layoutXProperty().bind(this.xProperty().multiply(5));
 		name.layoutYProperty().bind(this.yProperty().multiply(5).add(-15));
+		name.setFont(Font.font("Verdana",11));
 		
 		while (yPos.get() >= 0 && (map.getMap()[yPos.get() + 4][xPos.get() + 2]) == '1') {
 			yPos.set(yPos.get() - 1);
@@ -113,5 +115,15 @@ public class WormView {
 	public void setHitbox(Rectangle hitbox) {
 		this.hitbox = hitbox;
 	}
+
+	public Text getName() {
+		return name;
+	}
+
+	public void setName(Text name) {
+		this.name = name;
+	}
+	
+	
 
 }
