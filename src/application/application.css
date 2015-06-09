@@ -55,11 +55,23 @@ ChoiceBox {
     -fx-background-color: #222222;
 }
 
+.menu-item {
+    -fx-pref-width: 40px
+}
+
 .menu-item .label {
     -fx-text-fill: #dddddd;
 }
 
 .menu-item:focused {
     -fx-background-color: #dd1111;
+}
+
+#colorSelector {
+    -fx-pref-width: 100px;
+}
+
+#colorSelector .menu-item {
+    -fx-pref-width: 95px
 }
 

@@ -23,7 +23,8 @@ public class GameSelectorView {
 	VBox mapSelector;
 	HBox numberOfTeamsSelector;
 	HBox numberOfWormsSelector;
-	HBox teamSelector;
+	TeamSelectorView tsv[];
+	HBox teamSelectors;
 	HBox playModeSelector;
 	
 	public GameSelectorView() {
@@ -31,9 +32,15 @@ public class GameSelectorView {
 		tg = new ToggleGroup();
 		mapSelector = new VBox(10, new Label("Choose the map :"), loadThumbnails());
 		numberOfTeamsSelector = new HBox(10, new Label("Number of teams : "), newNumberChoiceBox(2, 4));
-		numberOfWormsSelector = new HBox(10, new Label("Number of worms in a team : "), newNumberChoiceBox(1, 10));
+		numberOfWormsSelector = new HBox(10, new Label("Number of worms in a team : "), newNumberChoiceBox(1, 5));
+		tsv = new TeamSelectorView[4];
+		tsv[0] = new TeamSelectorView("Player 1", Color.RED);
+		tsv[1] = new TeamSelectorView("Player 2", Color.BLUE);
+		tsv[2] = new TeamSelectorView("Player 3", Color.YELLOW);
+		tsv[3] = new TeamSelectorView("Player 4", Color.GREEN);
+		teamSelectors = new HBox(10, tsv[0].getSelector(), tsv[1].getSelector(), tsv[2].getSelector(), tsv[3].getSelector());
 		selectorDisplay = new VBox(10);
-		selectorDisplay.getChildren().addAll(mapSelector, numberOfTeamsSelector, numberOfWormsSelector);
+		selectorDisplay.getChildren().addAll(mapSelector, numberOfTeamsSelector, numberOfWormsSelector, teamSelectors);
 		selectorDisplay.setPadding(new Insets(10));
 		selectorDisplay.setId("selector");
 	}
@@ -61,12 +68,12 @@ public class GameSelectorView {
 	public void generate() {
 		map = new Map(tg.getSelectedToggle().getUserData() + ".map");
 		for (int i = 0; i < ((ChoiceBox<Integer>) numberOfTeamsSelector.getChildren().get(1)).getValue(); i++) {
-			teams.add(new Team("Team" + i, Color.AQUA));
+			teams.add(new Team(tsv[i].getName(), tsv[i].getColor()));
 		}
 		for (int j = 0; j < teams.size(); j++) {
 			Team t = teams.get(j);
 			for (int k = 0; k < ((ChoiceBox<Integer>) numberOfWormsSelector.getChildren().get(1)).getValue(); k++) {
-				t.addMember(new Worm("name", map, j*40 + k*3, 20, Weapon.ROCKET));
+				t.addMember(new Worm(tsv[j].getWormNames().get(k), map, j*40 + k*3, 20, Weapon.ROCKET));
 			}
 		}
 	}
