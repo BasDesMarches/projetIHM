@@ -6,7 +6,11 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
+import views.WormView;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.geometry.Bounds;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Shape;
 
 public class Map {
 	char map[][];
@@ -51,6 +55,13 @@ public class Map {
 					map[i][j] = '0';
 				}
 			}
+		}
+		Circle c = new Circle(xPos*5, yPos*5, rad*5);
+		int lostLife = 0;
+		for (WormView wv : WormView.wormViews) {
+			Bounds bounds = Shape.intersect(c, wv.getHitbox()).getBoundsInLocal();
+			lostLife = (int) (bounds.getHeight() * bounds.getWidth() / 18);
+			wv.getWorm().lifeProperty().set(wv.getWorm().lifeProperty().get() - lostLife);
 		}
 		hasChanged.set(true);
 	}

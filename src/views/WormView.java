@@ -13,24 +13,28 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 
 public class WormView {
 	Worm worm;
 	SimpleIntegerProperty xPos;
 	SimpleIntegerProperty yPos;
 	ImageView pic;
-	Rectangle lifeBg = new Rectangle(30,3, Color.BLACK);
-	Rectangle lifeValue = new Rectangle(30,3, Color.GREEN);
+	Rectangle lifeBg = new Rectangle(30,5, Color.BLACK);
+	Rectangle lifeValue = new Rectangle(30,5, Color.GREEN);
 	Rectangle hitbox = new Rectangle(30,30);
-	Rectangle fireBox = new Rectangle(5,5);
+	Text name = new Text();
 	ImageView bullet = new ImageView();
-	ImageView wormIm = new ImageView();
 	Image im = new Image("Images/Worms/bull1.png");
 	Group wormGroup = new Group();
 	static public ArrayList<Rectangle> hitBoxs = new ArrayList<Rectangle>();
+	static public ArrayList<Worm> worms = new ArrayList<Worm>();
+	static public ArrayList<WormView> wormViews = new ArrayList<WormView>();
 
 	public WormView(Worm w, Map map) {
 		worm = w;
+		worms.add(worm);
+		wormViews.add(this);
 		xPos = new SimpleIntegerProperty();
 		xPos.bindBidirectional(worm.xPosProperty());
 		yPos = new SimpleIntegerProperty();
@@ -38,9 +42,8 @@ public class WormView {
 		pic = new ImageView(new Image("Images/Worms/test2.gif"));
 		pic.setViewport(new Rectangle2D(15, 15, 30, 30));
 		pic.scaleXProperty().bind(new When(w.isOnRight()).then(-1).otherwise(1));
-		wormIm = this.getPic();
-		wormIm.layoutXProperty().bind(this.xProperty().multiply(5));
-		wormIm.layoutYProperty().bind(this.yProperty().multiply(5));
+		pic.layoutXProperty().bind(this.xProperty().multiply(5));
+		pic.layoutYProperty().bind(this.yProperty().multiply(5));
 		lifeBg.xProperty().bind(xPos.multiply(5));
 		lifeBg.yProperty().bind(yPos.multiply(5).add(-10));
 		lifeValue.xProperty().bind(xPos.multiply(5));
@@ -50,9 +53,9 @@ public class WormView {
 		hitbox.yProperty().bind(yPos.multiply(5));
 		hitbox.setVisible(false);
 		hitBoxs.add(hitbox);
-		fireBox.xProperty().bind(worm.xFireProperty());
-		fireBox.yProperty().bind(worm.yFireProperty());
-		fireBox.setVisible(false);
+		name.setText(worm.getName());
+		name.layoutXProperty().bind(this.xProperty().multiply(5));
+		name.layoutYProperty().bind(this.yProperty().multiply(5).add(-15));
 		
 		while (yPos.get() >= 0 && (map.getMap()[yPos.get() + 4][xPos.get() + 2]) == '1') {
 			yPos.set(yPos.get() - 1);
@@ -66,7 +69,7 @@ public class WormView {
 		bullet.layoutXProperty().bind(worm.xFireProperty().subtract(15));
 		bullet.layoutYProperty().bind(worm.yFireProperty().subtract(15));
 		bullet.visibleProperty().bind(Worm.isFiring.and(worm.isCurrentWorm()).and(worm.isBulletInBounds()));
-		wormGroup.getChildren().addAll(wormIm,hitbox,fireBox, bullet, lifeBg, lifeValue);
+		wormGroup.getChildren().addAll(pic,hitbox,name, bullet, lifeBg, lifeValue);
 //		wormGroup.setVisible(false);
 		
 	}
@@ -111,12 +114,4 @@ public class WormView {
 		this.hitbox = hitbox;
 	}
 
-	public Rectangle getFireBox() {
-		return fireBox;
-	}
-
-	public void setFireBox(Rectangle fireBox) {
-		this.fireBox = fireBox;
-	}
-	
 }

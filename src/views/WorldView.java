@@ -6,7 +6,6 @@ import application.Map;
 import application.Team;
 import application.TurnManager;
 import application.Weapon;
-import application.Worm;
 import javafx.animation.Interpolator;
 import javafx.animation.ParallelTransition;
 import javafx.animation.ScaleTransition;
@@ -53,7 +52,7 @@ public class WorldView {
 		currentTeamIndex = 0;
 		numberOfRemainingTeams = teams.size();
 		gameFinished = new SimpleBooleanProperty(false);
-		timer = new Text(740,40,"");					// The timer and turn manager
+		timer = new Text(740,50,"");					// The timer and turn manager
 		timer.setId("timer");
 		Light.Distant light = new Light.Distant(-120.0, 60, Color.YELLOW);
 		timer.setEffect(new Lighting(light));

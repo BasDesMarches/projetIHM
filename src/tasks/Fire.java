@@ -111,32 +111,11 @@ public class Fire extends Task<Void>{
 	private boolean wormHit(double x, double y){
 		boolean b = false;
 		for (Rectangle r : WormView.hitBoxs) {
-			if (wormv.getHitbox() != r && r.contains(new Point2D(x, y))) {
+			if (wormv.getHitbox() != r && r.visibleProperty().get() && r.contains(new Point2D(x, y))) {
 				b = true;
 			}
 		}
 		return b;
 	}
-	
-/*	private void adjust(){
-		
-		for (int i = 0;i < wV.getTeamView().size(); i++ ){
-			for (int j = 0;j < wV.getTeamView().get(i).getMembers().size();i++){
-				findWorm(i, j).yPosAdjust();
-			}
-		}
-	}
-	
-	private void damages(int dam, int rad) {
-		for (int i = 0;i < wV.getTeamView().size(); i++ ){
-			for (int j = 0;j < wV.getTeamView().get(i).getMembers().size();i++){
-				
-			}
-		}
-	}
-	
-	
-	private Worm findWorm(int i, int j){
-		return wV.getTeamView().get(i).getMembers().get(j).getWorm();
-	}*/
+
 }

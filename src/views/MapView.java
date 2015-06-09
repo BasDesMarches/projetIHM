@@ -1,6 +1,8 @@
 package views;
 
 import application.Map;
+import application.Worm;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.Node;
@@ -59,6 +61,20 @@ public class MapView {
 		for(Node node : map.getChildren()){
 			if(cases[GridPane.getRowIndex(node)][GridPane.getColumnIndex(node)] == '0'){
 				((Rectangle) node).setFill(Color.DEEPSKYBLUE);
+			}
+		}
+		SimpleIntegerProperty x;
+		SimpleIntegerProperty y;
+		for (Worm worm : WormView.worms) {
+			x = new SimpleIntegerProperty(worm.xPosProperty().get());
+			y = new SimpleIntegerProperty(worm.yPosProperty().get());
+			x.bindBidirectional(worm.xPosProperty());
+			y.bindBidirectional(worm.yPosProperty());
+			while (y.get() >= 0 && (m.getMap()[y.get() + 4][x.get() + 2]) == '1') {
+				y.set(y.get() - 1);
+			}
+			while ((y.get() + 5 < 120) && (m.getMap()[y.get() + 5][x.get() + 2]) == '0') {
+				y.set(y.get() + 1);
 			}
 		}
 	}

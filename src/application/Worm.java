@@ -166,4 +166,10 @@ public class Worm {
 	public SimpleBooleanProperty isBulletInBounds() {
 		return bulletInBounds;
 	}
+
+
+	public void setName(String name) {
+		this.name = name;
+	}
+	
 }
