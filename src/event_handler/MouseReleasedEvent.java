@@ -1,7 +1,7 @@
 package event_handler;
 
 import views.WorldView;
-import application.Worm;
+import views.WormView;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 
@@ -18,19 +18,19 @@ public class MouseReleasedEvent implements EventHandler<MouseEvent>{
 		if (world.isGameFinished().get()) {
 			world.setGameFinished(false);
 		} else {
-			Worm w = world.getCurrentWorm().getWorm();
+			WormView w = world.getCurrentWorm();
 			switch (event.getButton()) {
 			case PRIMARY:
-				if(w.isChoosingWeapon()){
+				if(w.getWorm().isChoosingWeapon()){
 					world.hideWeaponChooser();
 				} else {
-					world.fire(Math.atan2(event.getSceneY() - (w.yPosProperty().get()+3)*5, event.getSceneX() - (w.xPosProperty().get()+3)*5), 5);
+					w.fire(Math.atan2(event.getSceneY() - (w.getWorm().yPosProperty().get()+3)*5, event.getSceneX() - (w.getWorm().xPosProperty().get()+3)*5), 5);
 					world.getMap().redrawMap();
 				}
 				break;
 				
 			case SECONDARY:
-				if (w.isChoosingWeapon()) {
+				if (w.getWorm().isChoosingWeapon()) {
 					world.hideWeaponChooser();
 				} else {
 					world.showWeaponChooser();

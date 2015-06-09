@@ -1,5 +1,8 @@
 package views;
 
+import java.util.ArrayList;
+
+import tasks.Fire;
 import application.Map;
 import application.Worm;
 import javafx.beans.binding.When;
@@ -21,11 +24,10 @@ public class WormView {
 	Rectangle hitbox = new Rectangle(30,30);
 	Rectangle fireBox = new Rectangle(5,5);
 	ImageView bullet = new ImageView();
-	ImageView wormIm= new ImageView();
+	ImageView wormIm = new ImageView();
 	Image im = new Image("Images/Worms/bull1.png");
 	Group wormGroup = new Group();
-	
-	//int team;
+	static public ArrayList<Rectangle> hitBoxs = new ArrayList<Rectangle>();
 
 	public WormView(Worm w, Map map) {
 		worm = w;
@@ -47,6 +49,7 @@ public class WormView {
 		hitbox.xProperty().bind(xPos.multiply(5));
 		hitbox.yProperty().bind(yPos.multiply(5));
 		hitbox.setVisible(false);
+		hitBoxs.add(hitbox);
 		fireBox.xProperty().bind(worm.xFireProperty());
 		fireBox.yProperty().bind(worm.yFireProperty());
 		fireBox.setVisible(false);
@@ -66,6 +69,18 @@ public class WormView {
 		wormGroup.getChildren().addAll(wormIm,hitbox,fireBox, bullet, lifeBg, lifeValue);
 //		wormGroup.setVisible(false);
 		
+	}
+
+	public void fire(double angle, double initSpeed) {
+		if (Worm.isFiring.get()) {
+			return;
+		}
+		Worm.isFiring.set(true);
+		worm.xFireProperty().set((xPos.get() + 3)*5);
+		worm.yFireProperty().set((yPos.get() + 3)*5);
+		Fire f = new Fire(angle, initSpeed, this);
+		Thread th = new Thread(f);
+		th.start();
 	}
 	
 	public ImageView getPic() {

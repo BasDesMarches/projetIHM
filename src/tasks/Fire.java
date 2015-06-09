@@ -1,12 +1,14 @@
 package tasks;
 
-import views.WorldView;
+import views.WormView;
 import application.Map;
 import application.Weapon;
 import application.Worm;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.concurrent.Task;
+import javafx.geometry.Point2D;
+import javafx.scene.shape.Rectangle;
 
 public class Fire extends Task<Void>{
 	Map map;
@@ -17,13 +19,12 @@ public class Fire extends Task<Void>{
 	Weapon weapon;
 	SimpleDoubleProperty xFire;
 	SimpleDoubleProperty yFire;
-	WorldView wV;
-	//Worm worm;
+	WormView wormv;
+	Worm worm;
 	
-	public Fire(double angle, double initSpeed, WorldView ww) {
-		wV = ww; 
-		Worm worm = wV.getTeamView().get(wV.getCurrentTeamIndex()).getMembers().get(wV.getCurrentWormIndex()).getWorm();
-		//worm = w;
+	public Fire(double angle, double initSpeed, WormView w) {
+		wormv = w;
+		worm = wormv.getWorm();
 		map = worm.getMap();
 		weapon = worm.getWeapon();
 		xInit = (worm.xPosProperty().get() + 3)*5;
@@ -57,7 +58,7 @@ public class Fire extends Task<Void>{
 						});
 						Thread.sleep(10);
 						i++;
-						if ((inBounds((int)(yFire.get()/5), (int)(xFire.get()/5)) && grid[(int)(yFire.get()/5)][(int)(xFire.get()/5)] == '1') || yFire.get()/5 > map.getYSize() + 20/*||wormHit()*/) {
+						if ((inBounds((int)(yFire.get()/5), (int)(xFire.get()/5)) && grid[(int)(yFire.get()/5)][(int)(xFire.get()/5)] == '1') || yFire.get()/5 > map.getYSize() + 20 || wormHit(xFire.get(), yFire.get())) {
 							hasHit = true;
 						}
 					}
@@ -71,7 +72,7 @@ public class Fire extends Task<Void>{
 				double yf = yInit;
 				int j = 0;
 				while (!hasHit && inBounds((int)(yf/5), (int)(xf/5))) {
-					if (grid[(int)(yf/5)][(int)(xf/5)] == '1'|| wormHit()) {
+					if (grid[(int)(yf/5)][(int)(xf/5)] == '1' || wormHit(xf, yf)) {
 						hasHit = true;
 					}
 					xf = xInit + hInitSpeed*j;
@@ -96,12 +97,7 @@ public class Fire extends Task<Void>{
 			
 			@Override
 			public void run() {
-				map.destroy((int)(yFire.get()/5), (int)(xFire.get()/5), weapon.getDamage()); 
-				for (int i = 0;i < wV.getTeamView().size(); i++ ){
-					for (int j = 0;j < wV.getTeamView().get(i).getMembers().size();i++){
-						findWorm(i,j).yPosAdjust();
-					}
-				}	
+				map.destroy((int)(yFire.get()/5), (int)(xFire.get()/5), weapon.getDamage());
 				Worm.isFiring.set(false);
 			}
 		});
@@ -112,35 +108,35 @@ public class Fire extends Task<Void>{
 		return (0 <= y && y < map.getYSize() && 0 <= x && x < map.getXSize());
 	}
 	
-	private boolean wormHit(){
-		boolean a = false;
-		for (int i = 0;i < wV.getTeamView().size(); i++ ){
-			for (int j = 0;j < wV.getTeamView().get(i).getMembers().size();i++){
-				if (i!=wV.getCurrentTeamIndex()&&j!=wV.getCurrentWormIndex()){
-					if (wV.getTeamView().get(i).getMembers().get(j).getHitbox().intersects(wV.getCurrentWorm().getFireBox().getLayoutBounds())){
-						a=true;
-					}
-				}
+	private boolean wormHit(double x, double y){
+		boolean b = false;
+		for (Rectangle r : WormView.hitBoxs) {
+			if (wormv.getHitbox() != r && r.contains(new Point2D(x, y))) {
+				b = true;
 			}
 		}
-		return a;
+		return b;
 	}
 	
-	/*
-	private void damages(int dam, int rad) {
-		for (int i = 0; i < allWorms.length; i++) {
-			if (Math.pow(allWorms[i].getWorm().xPosProperty().get() - currentWorm.getWorm().xFireProperty().get(), 2) + Math.pow(allWorms[i].getWorm().yPosProperty().get() - currentWorm.getWorm().yFireProperty().get(), 2) < Math.pow(rad, 2)) {
-				allWorms[i].getWorm().lifeProperty().subtract(dam);
-			}
-			if (allWorms[i].getWorm().lifeProperty().get()<=0){
-				removeWorm(i);
-			}
+/*	private void adjust(){
 		
+		for (int i = 0;i < wV.getTeamView().size(); i++ ){
+			for (int j = 0;j < wV.getTeamView().get(i).getMembers().size();i++){
+				findWorm(i, j).yPosAdjust();
+			}
 		}
 	}
-	*/
+	
+	private void damages(int dam, int rad) {
+		for (int i = 0;i < wV.getTeamView().size(); i++ ){
+			for (int j = 0;j < wV.getTeamView().get(i).getMembers().size();i++){
+				
+			}
+		}
+	}
+	
 	
 	private Worm findWorm(int i, int j){
 		return wV.getTeamView().get(i).getMembers().get(j).getWorm();
-	}
-	}
+	}*/
+}

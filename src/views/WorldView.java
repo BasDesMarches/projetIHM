@@ -2,7 +2,6 @@ package views;
 
 import java.util.ArrayList;
 
-import tasks.Fire;
 import application.Map;
 import application.Team;
 import application.TurnManager;
@@ -194,18 +193,6 @@ public class WorldView {
 			text.setLayoutY(250);
 			world.getChildren().add(text);
 		}
-	}
-	
-	public void fire(double angle, double initSpeed) {
-		if (currentWorm.getWorm().isFiring.get()) {
-			return;
-		}
-		currentWorm.getWorm().isFiring.set(true);
-		currentWorm.getWorm().xFireProperty().set((currentWorm.getWorm().xPosProperty().get() + 3)*5);
-		currentWorm.getWorm().yFireProperty().set((currentWorm.getWorm().yPosProperty().get() + 3)*5);
-		Fire f = new Fire(angle, initSpeed, this);
-		Thread th = new Thread(f);
-		th.start();
 	}
 
 // ========== Getters and setters ==========
