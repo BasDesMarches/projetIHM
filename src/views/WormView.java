@@ -32,7 +32,7 @@ public class WormView {
 	static public ArrayList<Worm> worms = new ArrayList<Worm>();
 	static public ArrayList<WormView> wormViews = new ArrayList<WormView>();
 
-	public WormView(Worm w, Map map) {
+	public WormView(Worm w, Map map, Color teamColor) {
 		worm = w;
 		worms.add(worm);
 		wormViews.add(this);
@@ -52,12 +52,14 @@ public class WormView {
 		lifeValue.widthProperty().bind(worm.lifeProperty().multiply(0.3));
 		hitbox.xProperty().bind(xPos.multiply(5));
 		hitbox.yProperty().bind(yPos.multiply(5));
-		hitbox.setVisible(false);
+		hitbox.setFill(Color.TRANSPARENT);
+//		hitbox.setVisible(false);
 		hitBoxs.add(hitbox);
 		name.setText(worm.getName());
 		name.layoutXProperty().bind(this.xProperty().multiply(5));
 		name.layoutYProperty().bind(this.yProperty().multiply(5).add(-15));
 		name.setFont(Font.font("Verdana",11));
+		name.setFill(teamColor);
 		
 		while (yPos.get() >= 0 && (map.getMap()[yPos.get() + 4][xPos.get() + 2]) == '1') {
 			yPos.set(yPos.get() - 1);

@@ -73,7 +73,7 @@ public class GameSelectorView {
 		for (int j = 0; j < teams.size(); j++) {
 			Team t = teams.get(j);
 			for (int k = 0; k < ((ChoiceBox<Integer>) numberOfWormsSelector.getChildren().get(1)).getValue(); k++) {
-				t.addMember(new Worm(tsv[j].getWormNames().get(k), map, j*40 + k*3, 20, Weapon.ROCKET));
+				t.addMember(new Worm(tsv[j].getWormNames().get(k), map, j*40 + k*7, 20, Weapon.ROCKET));
 			}
 		}
 	}

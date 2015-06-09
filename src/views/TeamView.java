@@ -14,7 +14,7 @@ public class TeamView {
 		this.team = team;
 		members = new ArrayList<WormView>(team.getMembers().size());
 		for (Worm worm : team.getMembers()) {
-			members.add(new WormView(worm, map));
+			members.add(new WormView(worm, map, team.getColor()));
 		}
 	}
 
