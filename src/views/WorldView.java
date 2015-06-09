@@ -19,6 +19,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.TilePane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
@@ -35,13 +36,12 @@ public class WorldView {
 	int currentTeamIndex;
 	Text timer;
 	TurnManager turnManager;
-	
 	int numberOfRemainingTeams;
 	SimpleBooleanProperty gameFinished;
-
 	ScaleTransition weaponChooserTransition1;
 	TranslateTransition weaponChooserTransition2;
 	ParallelTransition weaponChooserTransition;
+	//Rectangle sel = new Rectangle(5,5);
 
 // ========== Construction of the instance ==========
 	public WorldView(Map m, ArrayList<Team> teams) {
@@ -65,15 +65,19 @@ public class WorldView {
 		currentTeam = team.get(currentTeamIndex);
 		currentWorm = currentTeam.getMembers().get(currentWormIndex);
 		currentWorm.getWorm().setCurrentWorm(true);
+		//sel.xProperty().bind(currentWorm.xProperty().multiply(5).add(15));
+		//sel.yProperty().bind(currentWorm.yProperty().multiply(5).add(-25));
 		world = new Group();							// The returned Group
 		world.getChildren().add(map.getView());
 		world.getChildren().add(weaponChooser);
 		for (TeamView t : team) {
 			for (WormView w : t.getMembers()) {
+				w.getName().setFill(TeamColor(team.indexOf(t)));
 				world.getChildren().add(w.getWormGroup());
 			}
 		}
-		world.getChildren().add(timer);
+		world.getChildren().add(timer);	
+		//world.getChildren().add(sel);
 	}
 
 	private void initiateWeaponChooser() {
@@ -193,6 +197,23 @@ public class WorldView {
 			text.setLayoutY(250);
 			world.getChildren().add(text);
 		}
+	}
+	
+	Color TeamColor(int i){
+		Color c = Color.BLACK;
+		switch (i){
+		case 0:
+			c = Color.YELLOW;
+			break;
+		case 1:
+			c = Color.RED;
+			break;
+		case 2:
+			c = Color.GREEN;
+			break;
+		default:
+		}
+		return c;
 	}
 
 // ========== Getters and setters ==========
