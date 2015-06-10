@@ -91,6 +91,12 @@ public class Fire extends Task<Void>{
 					}
 				});
 				break;
+			case PUNCH:
+				if(wormv.getWorm().isOnRight().get()){
+					xFire.set(xInit+30);
+				}else{xFire.set(xInit-30);
+				}
+				yFire.set(yInit);
 	
 			default:
 				break;
