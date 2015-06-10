@@ -4,10 +4,14 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ListView.EditEvent;
+import javafx.scene.input.MouseEvent;
 //import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -47,15 +51,29 @@ public class TeamSelectorView {
 	ChoiceBox<Color> colorSelector;
 	ListView<String> wormNamesView;
 	VBox teamSelector;
+	TextField tf;
 	
 	public TeamSelectorView(String name, Color def) {
 		this.name = new TextField(name);
+		tf = new TextField();
 		colorSelector = new ChoiceBox<Color>();
 		colorSelector.setId("colorSelector");
 		wormNamesView = new ListView<String>();
+		wormNamesView.setOnEditStart(new EventHandler<ListView.EditEvent<String>>() {
+			@Override
+			public void handle(EditEvent<String> event) {
+				tf.setText(wormNamesView.getItems().get(wormNamesView.getEditingIndex()));
+			}
+		});
+		wormNamesView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				wormNamesView.edit(wormNamesView.getSelectionModel().getSelectedIndex());
+			}
+		});
 		wormNamesView.setEditable(true);
 		setBox(colorSelector, def);
-		teamSelector = new VBox(10, this.name, new Label("Team color :"),colorSelector, wormNamesView);
+		teamSelector = new VBox(10, this.name, new Label("Team color :"),colorSelector, wormNamesView, tf);
 	}
 	
 	private void setBox(ChoiceBox<Color> box, Color def) {
@@ -90,23 +108,21 @@ public class TeamSelectorView {
 			}
 		});
 		box.getItems().addAll(Color.RED, Color.BLUE, Color.YELLOW, Color.GREEN);
-//		for (MenuItem item : box.getContextMenu().getItems()) {
-//			Rectangle r = new Rectangle(15, 10, box.getConverter().fromString(item.getText()));
-//			r.setStroke(Color.BLACK);
-//			r.setStrokeWidth(1);
-//			item.setGraphic(r);
-//		}
 		box.valueProperty().addListener(new ChangeListener<Color>() {
 			@Override
 			public void changed(ObservableValue<? extends Color> observable,
 					Color oldValue, Color newValue) {
 				if (newValue == Color.YELLOW) {
+					box.setStyle("-fx-border-color: #bbbb11;");
 					wormNamesView.setItems(yellowWormNames);
 				} else if (newValue == Color.RED) {
+					box.setStyle("-fx-border-color: #cc1111;");
 					wormNamesView.setItems(redWormNames);
 				} else if (newValue == Color.BLUE) {
+					box.setStyle("-fx-border-color: #1111cc;");
 					wormNamesView.setItems(blueWormNames);
 				} else if (newValue == Color.GREEN) {
+					box.setStyle("-fx-border-color: #11aa11;");
 					wormNamesView.setItems(greenWormNames);
 				}
 			}
