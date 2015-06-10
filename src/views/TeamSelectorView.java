@@ -69,7 +69,11 @@ public class TeamSelectorView {
 		wormNamesView.setOnEditStart(new EventHandler<ListView.EditEvent<String>>() {
 			@Override
 			public void handle(EditEvent<String> event) {
-				tf.setText(wormNamesView.getItems().get(wormNamesView.getEditingIndex()));
+				if (wormNamesView.getEditingIndex() != -1) {
+					tf.setText(wormNamesView.getItems().get(wormNamesView.getEditingIndex()));
+				} else {
+					tf.setText("");
+				}
 			}
 		});
 		tf.setOnKeyReleased(new EventHandler<KeyEvent>() {
@@ -78,7 +82,7 @@ public class TeamSelectorView {
 				if (event.getCode() == KeyCode.ENTER && wormNamesView.getEditingIndex() != -1) {
 					String str = new String(tf.getText());
 					wormNamesView.getItems().set(wormNamesView.getEditingIndex(), str);
-					ListView.editCommitEvent();
+					wormNamesView.edit(-1);
 				}
 			}
 		});
