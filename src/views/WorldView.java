@@ -40,7 +40,6 @@ public class WorldView {
 	ScaleTransition weaponChooserTransition1;
 	TranslateTransition weaponChooserTransition2;
 	ParallelTransition weaponChooserTransition;
-	//Rectangle sel = new Rectangle(5,5);
 
 // ========== Construction of the instance ==========
 	public WorldView(Map m, ArrayList<Team> teams) {
