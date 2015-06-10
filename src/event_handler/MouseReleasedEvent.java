@@ -21,7 +21,7 @@ public class MouseReleasedEvent implements EventHandler<MouseEvent>{
 			WormView w = world.getCurrentWorm();
 			switch (event.getButton()) {
 			case PRIMARY:
-				if(w.getWorm().isChoosingWeapon()){
+				if(w.getWorm().isChoosingWeapon().get()){
 					world.hideWeaponChooser();
 				} else {
 					w.fire(Math.atan2(event.getSceneY() - (w.getWorm().yPosProperty().get()+3)*5, event.getSceneX() - (w.getWorm().xPosProperty().get()+3)*5), 5);
@@ -30,7 +30,7 @@ public class MouseReleasedEvent implements EventHandler<MouseEvent>{
 				break;
 				
 			case SECONDARY:
-				if (w.getWorm().isChoosingWeapon()) {
+				if (w.getWorm().isChoosingWeapon().get()) {
 					world.hideWeaponChooser();
 				} else {
 					world.showWeaponChooser();

@@ -63,8 +63,6 @@ public class WorldView {
 		currentTeam = team.get(currentTeamIndex);
 		currentWorm = currentTeam.getMembers().get(currentWormIndex);
 		currentWorm.getWorm().setCurrentWorm(true);
-		//sel.xProperty().bind(currentWorm.xProperty().multiply(5).add(15));
-		//sel.yProperty().bind(currentWorm.yProperty().multiply(5).add(-25));
 		world = new Group();							// The returned Group
 		world.getChildren().add(map.getView());
 		world.getChildren().add(weaponChooser);
@@ -81,10 +79,10 @@ public class WorldView {
 		for (Weapon weapon : Weapon.values()) {
 			tempWeaponImage = new ImageView(weapon.getImage());
 			tempWeaponImage.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
 				@Override
 				public void handle(MouseEvent event) {
 					currentWorm.getWorm().setWeapon(weapon);
+					currentWorm.setWeaponImage(weapon.getImage());
 				}
 			});
 			weaponChooser.getChildren().add(tempWeaponImage);

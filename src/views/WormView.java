@@ -21,6 +21,7 @@ public class WormView {
 	SimpleIntegerProperty xPos;
 	SimpleIntegerProperty yPos;
 	ImageView pic;
+	ImageView weapon;
 	Rectangle lifeBg = new Rectangle(30,5, Color.BLACK);
 	Rectangle lifeValue = new Rectangle(30,5, Color.GREEN);
 	Rectangle hitbox = new Rectangle(30,30);
@@ -46,9 +47,8 @@ public class WormView {
 		pic.scaleXProperty().bind(new When(w.isOnRight()).then(-1).otherwise(1));
 		pic.layoutXProperty().bind(this.xProperty().multiply(5));
 		pic.layoutYProperty().bind(this.yProperty().multiply(5));
-		sel = new ImageView(new Image("Images/Worms/sel.png"));
-		sel.xProperty().bind(xPos.multiply(5).add(6));
-		sel.yProperty().bind(yPos.multiply(5).add(-45));
+		weapon = new ImageView(worm.getWeapon().getImage());
+		weapon.visibleProperty().bind(worm.isCurrentWorm().and(worm.isChoosingWeapon().not()));
 		lifeBg.xProperty().bind(xPos.multiply(5));
 		lifeBg.yProperty().bind(yPos.multiply(5).add(-10));
 		lifeValue.xProperty().bind(xPos.multiply(5));
@@ -57,13 +57,16 @@ public class WormView {
 		hitbox.xProperty().bind(xPos.multiply(5));
 		hitbox.yProperty().bind(yPos.multiply(5));
 		hitbox.setFill(Color.TRANSPARENT);
-//		hitbox.setVisible(false);
 		hitBoxs.add(hitbox);
 		name.setText(worm.getName());
 		name.layoutXProperty().bind(this.xProperty().multiply(5));
 		name.layoutYProperty().bind(this.yProperty().multiply(5).add(-15));
 		name.setFont(Font.font("Verdana",11));
 		name.setFill(teamColor);
+		sel = new ImageView(new Image("Images/Worms/sel.png"));
+		sel.xProperty().bind(xPos.multiply(5).add(6));
+		sel.yProperty().bind(yPos.multiply(5).add(-45));
+		sel.visibleProperty().bind(worm.isCurrentWorm());
 		
 		while (yPos.get() >= 0 && (map.getMap()[yPos.get() + 4][xPos.get() + 2]) == '1') {
 			yPos.set(yPos.get() - 1);
@@ -77,7 +80,7 @@ public class WormView {
 		bullet.layoutXProperty().bind(worm.xFireProperty().subtract(15));
 		bullet.layoutYProperty().bind(worm.yFireProperty().subtract(15));
 		bullet.visibleProperty().bind(Worm.isFiring.and(worm.isCurrentWorm()).and(worm.isBulletInBounds()));
-		wormGroup.getChildren().addAll(pic,hitbox,name, bullet, lifeBg, lifeValue, sel);
+		wormGroup.getChildren().addAll(pic,hitbox,name, bullet, lifeBg, lifeValue, sel, weapon);
 		wormGroup.visibleProperty().bind(w.isAliveProperty());
 //		wormGroup.setVisible(false);
 		
@@ -131,6 +134,7 @@ public class WormView {
 		this.name = name;
 	}
 	
-	
-
+	public void setWeaponImage(Image image) {
+		weapon.setImage(image);
+	}
 }
