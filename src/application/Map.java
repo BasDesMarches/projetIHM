@@ -62,6 +62,9 @@ public class Map {
 			Bounds bounds = Shape.intersect(c, wv.getHitbox()).getBoundsInLocal();
 			lostLife = (int) (bounds.getHeight() * bounds.getWidth() / 18);
 			wv.getWorm().lifeProperty().set(wv.getWorm().lifeProperty().get() - lostLife);
+			if(wv.getWorm().lifeProperty().get()<=0){
+				wv.getWorm().isAliveProperty().set(false);
+			}
 		}
 		hasChanged.set(true);
 	}

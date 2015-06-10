@@ -19,6 +19,7 @@ public class Worm {
 	SimpleDoubleProperty yFire;
 	public static SimpleBooleanProperty isFiring = new SimpleBooleanProperty(false);
 	SimpleBooleanProperty bulletInBounds;
+	SimpleBooleanProperty isAlive= new SimpleBooleanProperty(true);
 	
 	public Worm(String name, Map m, int x, int y, Weapon w){
 		this.name = name;
@@ -171,5 +172,16 @@ public class Worm {
 	public void setName(String name) {
 		this.name = name;
 	}
+
+
+	public SimpleBooleanProperty isAliveProperty() {
+		return isAlive;
+	}
+
+
+	public void setIsAlive(SimpleBooleanProperty isAlive) {
+		this.isAlive = isAlive;
+	}
+	
 	
 }
