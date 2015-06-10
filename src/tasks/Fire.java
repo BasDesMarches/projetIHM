@@ -1,7 +1,5 @@
 package tasks;
 
-import java.util.Timer;
-
 import views.WormView;
 import application.Map;
 import application.Weapon;
@@ -43,7 +41,7 @@ public class Fire extends Task<Void>{
 	protected Void call() throws Exception {
 		boolean hasHit = false;
 		char[][] grid = map.getMap();
-		double g = 0.01;
+		double g = 0.015;
 		switch (weapon) {
 			case ROCKET:
 				int i = 0;
