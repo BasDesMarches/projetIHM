@@ -1,5 +1,7 @@
 package tasks;
 
+import java.util.Timer;
+
 import views.WormView;
 import application.Map;
 import application.Weapon;
@@ -100,6 +102,7 @@ public class Fire extends Task<Void>{
 				break;
 	
 			case GRENADE:
+				Timer t= new Timer();
 				int k = 0;
 				try {
 					while (!hasHit) {
@@ -114,8 +117,11 @@ public class Fire extends Task<Void>{
 						});
 						Thread.sleep(10);
 						k++;
-						if ((inBounds((int)(yFire.get()/5), (int)(xFire.get()/5)) && grid[(int)(yFire.get()/5)][(int)(xFire.get()/5)] == '1') || yFire.get()/5 > map.getYSize() + 20 || wormHit(xFire.get(), yFire.get())) {
-							hasHit = true;
+						if ((inBounds((int)(yFire.get()/5), (int)(xFire.get()/5)) && grid[(int)(yFire.get()/5)][(int)(xFire.get()/5)] == '1') || yFire.get()/5 > map.getYSize() + 20) {
+							//hasHit = true;
+							 hInitSpeed= hInitSpeed/2;
+							 vInitSpeed= vInitSpeed/2;
+							 k=0;
 						}
 					}
 				} catch (InterruptedException e) {
