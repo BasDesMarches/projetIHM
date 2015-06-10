@@ -14,7 +14,7 @@ public class Worm {
 	SimpleIntegerProperty yPos;
 	SimpleBooleanProperty onRight;
 	SimpleBooleanProperty currentWorm;
-	boolean choosingWeapon;
+	SimpleBooleanProperty choosingWeapon;
 	SimpleDoubleProperty xFire;
 	SimpleDoubleProperty yFire;
 	public static SimpleBooleanProperty isFiring = new SimpleBooleanProperty(false);
@@ -28,7 +28,7 @@ public class Worm {
 		yPos = new SimpleIntegerProperty(y);
 		onRight = new SimpleBooleanProperty(true);
 		currentWorm = new SimpleBooleanProperty(false);
-		choosingWeapon = false;
+		choosingWeapon = new SimpleBooleanProperty(false);
 		weapon = w;
 		life = new SimpleIntegerProperty(100);
 		xFire = new SimpleDoubleProperty(x);
@@ -136,7 +136,7 @@ public class Worm {
 		this.life = life;
 	}
 	
-	public boolean isChoosingWeapon() {
+	public SimpleBooleanProperty isChoosingWeapon() {
 		return choosingWeapon;
 	}
 	
@@ -161,7 +161,7 @@ public class Worm {
 
 
 	public void setIsChoosingWeapon(boolean b) {
-		choosingWeapon = b;
+		choosingWeapon.set(b);
 	}
 	
 	public SimpleBooleanProperty isBulletInBounds() {
