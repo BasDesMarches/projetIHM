@@ -10,6 +10,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ListView.EditEvent;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 //import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.VBox;
@@ -58,16 +60,26 @@ public class TeamSelectorView {
 		colorSelector = new ChoiceBox<Color>();
 		colorSelector.setId("colorSelector");
 		wormNamesView = new ListView<String>();
+		wormNamesView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				wormNamesView.edit(wormNamesView.getSelectionModel().getSelectedIndex());
+			}
+		});
 		wormNamesView.setOnEditStart(new EventHandler<ListView.EditEvent<String>>() {
 			@Override
 			public void handle(EditEvent<String> event) {
 				tf.setText(wormNamesView.getItems().get(wormNamesView.getEditingIndex()));
 			}
 		});
-		wormNamesView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+		tf.setOnKeyReleased(new EventHandler<KeyEvent>() {
 			@Override
-			public void handle(MouseEvent event) {
-				wormNamesView.edit(wormNamesView.getSelectionModel().getSelectedIndex());
+			public void handle(KeyEvent event) {
+				if (event.getCode() == KeyCode.ENTER && wormNamesView.getEditingIndex() != -1) {
+					String str = new String(tf.getText());
+					wormNamesView.getItems().set(wormNamesView.getEditingIndex(), str);
+					ListView.editCommitEvent();
+				}
 			}
 		});
 		wormNamesView.setEditable(true);
