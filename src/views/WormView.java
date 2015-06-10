@@ -85,11 +85,25 @@ public class WormView {
 //		wormGroup.setVisible(false);
 		
 	}
+	
+	private Image weaponImageSel(){
+		Image a = new Image("Images/Worms/bull1.png");
+		switch(worm.getWeapon()){
+		case GRENADE:
+			a = new Image("Images/Worms/grenade.png");
+			break;
+		default:
+			break;
+		}
+		return a;
+	}
 
 	public void fire(double angle, double initSpeed) {
 		if (Worm.isFiring.get()) {
 			return;
 		}
+		im =weaponImageSel();
+		bullet.setImage(im);
 		Worm.isFiring.set(true);
 		worm.xFireProperty().set((xPos.get() + 3)*5);
 		worm.yFireProperty().set((yPos.get() + 3)*5);

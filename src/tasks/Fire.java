@@ -97,7 +97,31 @@ public class Fire extends Task<Void>{
 				}else{xFire.set(xInit-30);
 				}
 				yFire.set(yInit);
+				break;
 	
+			case GRENADE:
+				int k = 0;
+				try {
+					while (!hasHit) {
+						final int k2 = k;
+						Platform.runLater(new Runnable() {
+							
+							@Override
+							public void run() {
+								xFire.setValue(xInit + hInitSpeed*k2);
+								yFire.setValue(yInit + vInitSpeed*k2 + g*k2*k2);
+							}
+						});
+						Thread.sleep(10);
+						k++;
+						if ((inBounds((int)(yFire.get()/5), (int)(xFire.get()/5)) && grid[(int)(yFire.get()/5)][(int)(xFire.get()/5)] == '1') || yFire.get()/5 > map.getYSize() + 20 || wormHit(xFire.get(), yFire.get())) {
+							hasHit = true;
+						}
+					}
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				break;
 			default:
 				break;
 		}

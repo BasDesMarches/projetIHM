@@ -3,7 +3,7 @@ package application;
 import javafx.scene.image.Image;
 
 public enum Weapon {
-	ROCKET("Rocket",10,1,"Images/Weapons/bazooka.1.png"),GUN("Gun",4,2,"Images/Weapons/handgun.1.png"),PUNCH("Punch",3,1,"Images/Weapons/firepnch.1.png");
+	ROCKET("Rocket",10,1,"Images/Weapons/bazooka.1.png"),GUN("Gun",4,2,"Images/Weapons/handgun.1.png"),PUNCH("Punch",3,1,"Images/Weapons/firepnch.1.png"),GRENADE("Grenade",10,1,"Images/Weapons/grenade.1.png");
 
 	String name;
 	int damage;
