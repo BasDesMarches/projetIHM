@@ -72,12 +72,10 @@ public class WorldView {
 		world.getChildren().add(weaponChooser);
 		for (TeamView t : team) {
 			for (WormView w : t.getMembers()) {
-				w.getName().setFill(TeamColor(team.indexOf(t)));
 				world.getChildren().add(w.getWormGroup());
 			}
 		}
-		world.getChildren().add(timer);	
-		//world.getChildren().add(sel);
+		world.getChildren().add(timer);		
 	}
 
 	private void initiateWeaponChooser() {
@@ -199,22 +197,6 @@ public class WorldView {
 		}
 	}
 	
-	Color TeamColor(int i){
-		Color c = Color.BLACK;
-		switch (i){
-		case 0:
-			c = Color.YELLOW;
-			break;
-		case 1:
-			c = Color.RED;
-			break;
-		case 2:
-			c = Color.GREEN;
-			break;
-		default:
-		}
-		return c;
-	}
 
 // ========== Getters and setters ==========
 	public Group getWorld() {

@@ -75,9 +75,11 @@ public class Fire extends Task<Void>{
 					if (grid[(int)(yf/5)][(int)(xf/5)] == '1' || wormHit(xf, yf)) {
 						hasHit = true;
 					}
-					xf = xInit + hInitSpeed*j;
-					yf = yInit + vInitSpeed*j;
-					j++;
+					if (!hasHit) {
+						xf = xInit + 0.5*hInitSpeed*j;
+						yf = yInit + 0.5*vInitSpeed*j;
+						j++;
+					}
 				}
 				final double tempxf = xf;
 				final double tempyf = yf;
