@@ -75,3 +75,11 @@ ChoiceBox {
     -fx-pref-width: 95px
 }
 
+#finalText {
+    -fx-font-family: Helvetica,Calibri,sans-serif;
+    -fx-font-size: 50;
+    -fx-text-alignment: center;
+    -fx-font-weight: bold;
+    -fx-fill: #dd1111;
+}
+
