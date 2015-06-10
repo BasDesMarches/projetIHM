@@ -27,6 +27,7 @@ public class GameSelectorView {
 	HBox teamSelectors;
 	HBox playModeSelector;
 	
+	@SuppressWarnings("unchecked")
 	public GameSelectorView() {
 		teams = new ArrayList<Team>();
 		tg = new ToggleGroup();
@@ -37,7 +38,10 @@ public class GameSelectorView {
 		tsv[0] = new TeamSelectorView("Player 1", Color.RED);
 		tsv[1] = new TeamSelectorView("Player 2", Color.BLUE);
 		tsv[2] = new TeamSelectorView("Player 3", Color.YELLOW);
+		tsv[2].getSelector().visibleProperty().bind(((ChoiceBox<Integer>) numberOfTeamsSelector.getChildren().get(1)).valueProperty().isEqualTo(3)
+				.or(((ChoiceBox<Integer>) numberOfTeamsSelector.getChildren().get(1)).valueProperty().isEqualTo(4)));
 		tsv[3] = new TeamSelectorView("Player 4", Color.GREEN);
+		tsv[3].getSelector().visibleProperty().bind(((ChoiceBox<Integer>) numberOfTeamsSelector.getChildren().get(1)).valueProperty().isEqualTo(4));
 		teamSelectors = new HBox(10, tsv[0].getSelector(), tsv[1].getSelector(), tsv[2].getSelector(), tsv[3].getSelector());
 		selectorDisplay = new VBox(10);
 		selectorDisplay.getChildren().addAll(mapSelector, numberOfTeamsSelector, numberOfWormsSelector, teamSelectors);
