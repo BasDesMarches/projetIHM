@@ -24,6 +24,7 @@ public class WormView {
 	Rectangle lifeBg = new Rectangle(30,5, Color.BLACK);
 	Rectangle lifeValue = new Rectangle(30,5, Color.GREEN);
 	Rectangle hitbox = new Rectangle(30,30);
+	ImageView sel;
 	Text name = new Text();
 	ImageView bullet = new ImageView();
 	Image im = new Image("Images/Worms/bull1.png");

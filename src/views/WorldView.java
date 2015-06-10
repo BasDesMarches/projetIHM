@@ -19,6 +19,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.TilePane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
@@ -40,6 +41,7 @@ public class WorldView {
 	ScaleTransition weaponChooserTransition1;
 	TranslateTransition weaponChooserTransition2;
 	ParallelTransition weaponChooserTransition;
+	//Rectangle sel = new Rectangle(5,5);
 
 // ========== Construction of the instance ==========
 	public WorldView(Map m, ArrayList<Team> teams) {
@@ -63,6 +65,8 @@ public class WorldView {
 		currentTeam = team.get(currentTeamIndex);
 		currentWorm = currentTeam.getMembers().get(currentWormIndex);
 		currentWorm.getWorm().setCurrentWorm(true);
+		//sel.xProperty().bind(currentWorm.xProperty().multiply(5).add(15));
+		//sel.yProperty().bind(currentWorm.yProperty().multiply(5).add(-25));
 		world = new Group();							// The returned Group
 		world.getChildren().add(map.getView());
 		world.getChildren().add(weaponChooser);
@@ -71,7 +75,7 @@ public class WorldView {
 				world.getChildren().add(w.getWormGroup());
 			}
 		}
-		world.getChildren().add(timer);	
+		world.getChildren().add(timer);		
 	}
 
 	private void initiateWeaponChooser() {
@@ -192,6 +196,7 @@ public class WorldView {
 			world.getChildren().add(text);
 		}
 	}
+	
 
 // ========== Getters and setters ==========
 	public Group getWorld() {
