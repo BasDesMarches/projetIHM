@@ -12,16 +12,17 @@ import javafx.animation.ScaleTransition;
 import javafx.animation.TranslateTransition;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.EventHandler;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.effect.Light;
 import javafx.scene.effect.Lighting;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
 
 public class WorldView {
@@ -40,7 +41,7 @@ public class WorldView {
 	ScaleTransition weaponChooserTransition1;
 	TranslateTransition weaponChooserTransition2;
 	ParallelTransition weaponChooserTransition;
-	//Rectangle sel = new Rectangle(5,5);
+	ImageView viseur;
 
 // ========== Construction of the instance ==========
 	public WorldView(Map m, ArrayList<Team> teams) {
@@ -50,6 +51,8 @@ public class WorldView {
 		currentWormIndex = 0;
 		currentTeamIndex = 0;
 		numberOfRemainingTeams = teams.size();
+		viseur = new ImageView(new Image("Images/viseur.png"));
+		viseur.setViewport(new Rectangle2D(15, 15, 30, 30));
 		gameFinished = new SimpleBooleanProperty(false);
 		timer = new Text(740,50,"");					// The timer and turn manager
 		timer.setId("timer");
@@ -72,7 +75,18 @@ public class WorldView {
 				world.getChildren().add(w.getWormGroup());
 			}
 		}
-		world.getChildren().add(timer);		
+		world.getChildren().add(timer);
+		world.getChildren().add(viseur);
+		world.setOnMouseMoved(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				double dist = 100;
+				double angle = Math.atan2(event.getSceneY() - (currentWorm.yProperty().get()+3)*5, event.getSceneX() - (currentWorm.xProperty().get()+3)*5);
+				viseur.setLayoutX((currentWorm.xProperty().get()+3)*5 + dist*Math.cos(angle) - 15);
+				viseur.setLayoutY((currentWorm.yProperty().get()+3)*5 + dist*Math.sin(angle) - 15);
+				viseur.setRotate(angle*180/Math.PI);
+			}
+		});
 	}
 
 	private void initiateWeaponChooser() {
@@ -180,17 +194,22 @@ public class WorldView {
 			world.getChildren().clear();
 			isGameFinished().set(true);
 			Text text = new Text();
+			text.setId("finalText");
 			if (t == null) {
 				text.setText("It's a draw!");
 			} else {
-				text.setText("The " + t.getName() + " team wins!");
+				text.setText(t.getName() + " wins!");
 			}
-			text.setFont(Font.font(40));
-			text.setTextAlignment(TextAlignment.CENTER);
+			AnchorPane pane = new AnchorPane(text);
+			pane.setStyle("-fx-background-color: #222222");
+			pane.setPrefSize(2000, 2000);
+			AnchorPane.setBottomAnchor(text, 0.0);
+			AnchorPane.setTopAnchor(text, 250.0);
+			AnchorPane.setLeftAnchor(text, 0.0);
+			AnchorPane.setRightAnchor(text, 0.0);
 			text.setWrappingWidth(800);
-			text.setLayoutX(200);
-			text.setLayoutY(250);
-			world.getChildren().add(text);
+			world.setStyle("-fx-background-color: #222222");
+			world.getChildren().add(pane);
 		}
 	}
 	

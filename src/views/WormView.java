@@ -98,6 +98,7 @@ public class WormView {
 		th.start();
 	}
 	
+	// ========== Getters and setters ==========
 	public ImageView getPic() {
 		return pic;
 	}
