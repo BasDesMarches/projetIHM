@@ -102,7 +102,7 @@ public class Fire extends Task<Void>{
 				break;
 	
 			case GRENADE:
-				Timer t= new Timer();
+				int r = 5;
 				int k = 0;
 				try {
 					while (!hasHit) {
@@ -118,10 +118,15 @@ public class Fire extends Task<Void>{
 						Thread.sleep(10);
 						k++;
 						if ((inBounds((int)(yFire.get()/5), (int)(xFire.get()/5)) && grid[(int)(yFire.get()/5)][(int)(xFire.get()/5)] == '1') || yFire.get()/5 > map.getYSize() + 20) {
-							//hasHit = true;
-							 hInitSpeed= hInitSpeed/2;
-							 vInitSpeed= vInitSpeed/2;
+							 hInitSpeed = hInitSpeed*0.9;
+							 vInitSpeed = vInitSpeed/2;
 							 k=0;
+							 xInit = xFire.get();
+							 yInit = yFire.get()-10;
+							 r--;
+							 if (r==0){
+								 hasHit=true;
+							 }
 						}
 					}
 				} catch (InterruptedException e) {
